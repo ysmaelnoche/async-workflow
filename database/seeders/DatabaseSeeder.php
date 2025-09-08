@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace Database\Seeders;
 
@@ -15,19 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             DepartmentSeeder::class,
-<<<<<<< HEAD
             SubDepartmentSeeder::class,
             SignatureStyleSeeder::class,
             AdminAccountSeeder::class,
             // EmployeeAndAccountSeeder::class,
-=======
 
             SignatureStyleSeeder::class,
             AdminAccountSeeder::class,
             // EmployeeAndAccountSeeder::class,
 
 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         ]);
     }
 }

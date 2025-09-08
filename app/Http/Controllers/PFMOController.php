@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -18,7 +18,6 @@ class PFMOController extends Controller
      */
     public function dashboard()
     {
-<<<<<<< HEAD
         $pfmoDepartment = Department::where('dept_code', 'PFMO')->first();
         
         if (!$pfmoDepartment) {
@@ -436,7 +435,6 @@ class PFMOController extends Controller
             return redirect()->back()->with('error', 'Failed to process bulk action');
         }
     }
-<<<<<<< HEAD
 
     /**
      * Show manage employees page

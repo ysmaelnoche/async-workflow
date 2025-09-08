@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Track Request') }} - ID: {{ $formRequest->form_id }}
@@ -59,13 +59,10 @@
                                                 <div class="
                                                     @if($approval->action === 'Rejected') bg-red-500
                                                     @elseif($approval->action === 'Approved') bg-green-500
-<<<<<<< HEAD
                                                     @elseif($approval->action === 'Send Feedback') bg-green-500
                                                     @else bg-blue-500
-=======
                                                     @elseif($approval->action === 'Approved') bg-green-500
                                                     @else bg-gray-500
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                     @endif
                                                     rounded-full w-8 h-8 flex items-center justify-center ring-4 ring-white dark:ring-gray-800">
                                                     @if($approval->action === 'Rejected')
@@ -76,7 +73,6 @@
                                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                                         </svg>
-<<<<<<< HEAD
                                                     @elseif($approval->action === 'Send Feedback')
                                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
@@ -84,11 +80,9 @@
                                                     @else
                                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-=======
                                                     @elseif($approval->action === 'Approved')
                                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                         </svg>
                                                     @endif
                                                 </div>
@@ -170,7 +164,6 @@
                                                         $subDeptName = 'PFMO Sub-Department';
                                                         if ($formRequest->assigned_sub_department) {
                                                             switch($formRequest->assigned_sub_department) {
-<<<<<<< HEAD
                                                                 case 'warehouse':
                                                                     $subDeptName = 'PFMO Warehouse Section (ROY MORALES)';
                                                                     break;
@@ -188,7 +181,6 @@
                                                                     break;
                                                                 default:
                                                                     $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Section';
-=======
                                                                 case 'electrical':
                                                                     $subDeptName = 'PFMO Electrical Department';
                                                                     break;
@@ -200,7 +192,6 @@
                                                                     break;
                                                                 default:
                                                                     $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Department';
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                             }
                                                         }
                                                     @endphp
@@ -224,7 +215,6 @@
                         </div>
                     </div>
 
-<<<<<<< HEAD
                     {{-- Job Order Status (if exists) --}}
                     @if($formRequest->jobOrder)
                         @php
@@ -452,8 +442,6 @@
                         </div>
                     @endif
 
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     {{-- IOM Specific Details --}}
                     @if ($formRequest->form_type === 'IOM' && $formRequest->iomDetails)
                         <div class="border-b pb-4 mb-4">
@@ -471,24 +459,18 @@
                             </div>
                         </div>
 
-<<<<<<< HEAD
                         {{-- Signatures Section - Only show final approvals/rejections visible to requestor --}}
-=======
                         {{-- Signatures Section --}}
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold mb-4">Signatures</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 @foreach ($formRequest->approvals->sortBy('action_date') as $approval)
-<<<<<<< HEAD
                                     @if(in_array($approval->action, ['Approved', 'Rejected', 'Send Feedback']) && ($approval->signature_data || $approval->signature_name))
                                         <div class="signature-card bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
                                             @if($approval->signature_data && (strpos($approval->signature_data, 'data:image/') === 0 || filter_var($approval->signature_data, FILTER_VALIDATE_URL)))
-=======
                                     @if($approval->action !== 'Submitted')
                                         <div class="signature-card bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
                                             @if($approval->signature_data)
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                 <div class="signature-image-container h-24 flex items-center justify-center border-b border-gray-100 dark:border-gray-700 px-6 py-2">
                                                     <img src="{{ $approval->signature_data }}"
                                                          alt="Digital Signature"
@@ -576,11 +558,8 @@
                                 @foreach($formRequest->approvals->sortBy('action_date') as $approval)
                                     @if($approval->action !== 'Submitted')
                                     <div class="border rounded-lg p-4 flex flex-col items-center justify-center">
-<<<<<<< HEAD
                                         @if($approval->signature_data && (strpos($approval->signature_data, 'data:image/') === 0 || filter_var($approval->signature_data, FILTER_VALIDATE_URL)))
-=======
                                         @if($approval->signature_data)
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                             <div class="signature-image-container h-24 flex items-center justify-center border-b border-gray-100 dark:border-gray-700">
                                                 <img src="{{ $approval->signature_data }}" alt="Digital Signature" class="max-h-20 object-contain">
                                             </div>
@@ -630,7 +609,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 
     {{-- Combined Job Order Fill-up & Feedback Modal --}}
     @if($formRequest->jobOrder && $formRequest->jobOrder->status === 'Completed')
@@ -813,7 +791,7 @@
                                     <label class="flex flex-col items-center">
                                         <input type="radio" name="satisfaction_rating" value="{{ $i }}" required class="sr-only">
                                         <div class="star-rating cursor-pointer text-3xl text-gray-300 hover:text-yellow-400 transition-colors" onclick="setRating({{ $i }})">
-                                            ⭐
+                                            â­
                                         </div>
                                         <span class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $i }}</span>
                                     </label>
@@ -1156,10 +1134,8 @@ window.onclick = function(event) {
 }
 </script>
 
-=======
 </x-app-layout>
 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Mr+Dafoe&family=Homemade+Apple&family=Pacifico&family=Dancing+Script&display=swap');
 </style>

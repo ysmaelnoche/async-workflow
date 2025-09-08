@@ -1,8 +1,7 @@
-@props(['type' => 'success', 'message'])
+﻿@props(['type' => 'success', 'message'])
 
 @php
 $bgColor = match($type) {
-<<<<<<< HEAD
     'success' => 'bg-gradient-to-r from-green-500 to-emerald-600',
     'error' => 'bg-gradient-to-r from-red-500 to-pink-600',
     'info' => 'bg-gradient-to-r from-blue-500 to-indigo-600',
@@ -126,7 +125,6 @@ $title = match($type) {
     animation: slideInRight 0.5s ease-out, shake 0.5s ease-in-out 0.5s;
 }
 </style> 
-=======
     'success' => 'bg-green-500',
     'error' => 'bg-red-500',
     'info' => 'bg-blue-500',
@@ -168,4 +166,3 @@ $icon = match($type) {
         </svg>
     </button>
 </div> 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80

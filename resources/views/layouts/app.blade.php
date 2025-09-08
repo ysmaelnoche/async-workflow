@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -37,12 +37,9 @@
             window.debugMode = {{ config('app.debug') ? 'true' : 'false' }};
         </script>
         
-<<<<<<< HEAD
         <!-- Enhanced Notification System -->
             <!-- Enhanced Notifications JavaScript -->
     <script src="{{ asset('js/enhanced-notifications.js') }}"></script>
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         <!-- Notification Badge Script -->
         <script src="{{ asset('js/notification-badge.js') }}"></script>
 
@@ -82,13 +79,10 @@
                 <x-toast-notification type="success" :message="session('success')" />
             @endif
 
-<<<<<<< HEAD
             @if (session('error') && !request()->ajax())
                 <x-simple-error-toast :message="session('error')" />
-=======
             @if (session('error'))
                 <x-toast-notification type="error" :message="session('error')" />
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             @endif
 
             @if (session('info'))
@@ -101,15 +95,12 @@
 
             <!-- Page Content -->
             <main>
-<<<<<<< HEAD
                 @isset($slot)
                     {{ $slot }}
                 @else
                     @yield('content')
                 @endisset
-=======
                 {{ $slot }}
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             </main>
         </div>
 

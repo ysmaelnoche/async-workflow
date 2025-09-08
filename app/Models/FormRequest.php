@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Models;
 
@@ -69,7 +69,6 @@ class FormRequest extends Model
     {
         return $this->hasMany(FormApproval::class, 'form_id', 'form_id');
     }
-<<<<<<< HEAD
 
     public function jobOrder(): HasOne
     {
@@ -83,6 +82,4 @@ class FormRequest extends Model
     {
         return 'form_id';
     }
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 }

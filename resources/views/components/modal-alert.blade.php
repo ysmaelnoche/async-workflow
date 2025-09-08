@@ -1,4 +1,4 @@
-@props([
+﻿@props([
     'title' => 'Alert',
     'type' => 'info', // info, error, warning, success
     'confirmText' => 'OK',
@@ -15,7 +15,6 @@ $typeClasses = [
     'success' => 'text-green-600',
 ];
 
-<<<<<<< HEAD
 $bgClasses = [
     'info' => 'bg-gradient-to-br from-blue-50 to-indigo-100',
     'error' => 'bg-gradient-to-br from-red-50 to-pink-100',
@@ -28,13 +27,11 @@ $buttonClasses = [
     'error' => 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 focus:ring-red-500',
     'warning' => 'bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 focus:ring-yellow-500',
     'success' => 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 focus:ring-green-500',
-=======
 $buttonClasses = [
     'info' => 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
     'error' => 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
     'warning' => 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500',
     'success' => 'bg-green-600 hover:bg-green-700 focus:ring-green-500',
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 ];
 
 $icons = [
@@ -47,7 +44,6 @@ $icons = [
 
 <div id="{{ $id }}" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-<<<<<<< HEAD
         <!-- Background overlay with backdrop blur -->
         <div class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300" onclick="closeModalAlert('{{ $id }}')"></div>
 
@@ -72,7 +68,6 @@ $icons = [
                     </h3>
                     <div class="mt-2">
                         <div class="text-sm text-gray-600 leading-relaxed">
-=======
         <!-- Background overlay -->
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeModalAlert('{{ $id }}')"></div>
 
@@ -90,13 +85,11 @@ $icons = [
                     </h3>
                     <div class="mt-2">
                         <div class="text-sm text-gray-500">
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             {{ $slot }}
                         </div>
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             
             <!-- Enhanced button section -->
             <div class="mt-6 sm:mt-6 sm:flex sm:flex-row-reverse">
@@ -111,14 +104,12 @@ $icons = [
                     <button type="button" 
                             onclick="closeModalAlert('{{ $id }}')" 
                             class="mt-3 w-full inline-flex justify-center items-center rounded-xl border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm transform hover:scale-105 transition-all duration-200">
-=======
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <button type="button" onclick="closeModalAlert('{{ $id }}')" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 {{ $buttonClasses[$type] }} text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">
                     {{ $confirmText }}
                 </button>
                 @if($showCancel)
                     <button type="button" onclick="closeModalAlert('{{ $id }}')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         {{ $cancelText }}
                     </button>
                 @endif
@@ -127,7 +118,6 @@ $icons = [
     </div>
 </div>
 
-<<<<<<< HEAD
 <style>
 .modal-scale {
     transform: scale(0.95);
@@ -226,7 +216,6 @@ window.styledAlert = function(message, title = 'Alert', type = 'info') {
                         <button type="button" onclick="closeModalAlert('${id}')" class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-lg px-6 py-3 bg-gradient-to-r from-${config.color}-600 to-${config.color}-600 hover:from-${config.color}-700 hover:to-${config.color}-700 text-base font-semibold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${config.color}-500 sm:ml-3 sm:w-auto sm:text-sm transform hover:scale-105 transition-all duration-200 relative overflow-hidden group">
                             <span class="relative z-10">OK</span>
                             <div class="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-=======
 <script>
 function showModalAlert(id) {
     document.getElementById(id).classList.remove('hidden');
@@ -262,17 +251,13 @@ window.styledAlert = function(message, title = 'Alert', type = 'info') {
                     <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                         <button type="button" onclick="closeModalAlert('${id}')" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
                             OK
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     `;
-<<<<<<< HEAD
     
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     document.body.insertAdjacentHTML('beforeend', alertHtml);
     showModalAlert(id);
     
@@ -280,7 +265,6 @@ window.styledAlert = function(message, title = 'Alert', type = 'info') {
     setTimeout(() => {
         const element = document.getElementById(id);
         if (element) element.remove();
-<<<<<<< HEAD
     }, 2000);
     
     // Add sound effect for error types (optional)
@@ -297,8 +281,6 @@ window.styledAlert = function(message, title = 'Alert', type = 'info') {
 };
 </script>
 </script>
-=======
     }, 1000);
 };
 </script>
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80

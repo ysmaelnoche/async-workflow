@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'PFMO Dashboard - Enhanced Workflow')
 
@@ -84,23 +84,17 @@
 @endpush
 
 @section('content')
-<<<<<<< HEAD
 <!-- BASIC DASHBOARD VIEW MARKER -->
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 <div class="container mx-auto px-4 py-8">
     <!-- Enhanced PFMO Dashboard Header -->
     <div class="pfmo-dashboard">
         <div class="flex justify-between items-center">
             <div>
-<<<<<<< HEAD
                                 <h1 class="display-5 fw-bold text-dark mb-2">
                     <i class="fas fa-tachometer-alt text-primary me-3"></i>
-                    PFMO Professional Dashboard ✅
+                    PFMO Professional Dashboard âœ…
                 </h1>
-=======
                 <h1 class="text-3xl font-bold mb-2">PFMO Enhanced Workflow Dashboard</h1>
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 <p class="text-lg opacity-90">Physical Facilities Management Office - Streamlined Process Management</p>
             </div>
             <div class="text-right">
@@ -133,7 +127,6 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <!-- Star Feedback and Recent Activity -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <!-- Average Star Feedback -->
@@ -161,7 +154,7 @@
             <div class="space-y-2">
                 @foreach($ratingDistribution as $rating)
                     <div class="flex items-center">
-                        <span class="text-sm w-8">{{ $rating['stars'] }}★</span>
+                        <span class="text-sm w-8">{{ $rating['stars'] }}â˜…</span>
                         <div class="flex-1 bg-gray-200 rounded-full h-2 mx-3">
                             <div class="bg-yellow-400 h-2 rounded-full" style="width: {{ $rating['percentage'] }}%"></div>
                         </div>
@@ -180,7 +173,6 @@
                     <div class="text-2xl font-bold text-green-600">{{ $feedbackData['statistics']['completion_rate'] ?? 0 }}%</div>
                     <div class="text-sm text-gray-600">Response Rate</div>
                 </div>
-=======
     <!-- Enhanced Workflow Stages -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <!-- Workflow Process Overview -->
@@ -215,7 +207,6 @@
             <div class="workflow-stage completed">
                 <h3 class="font-semibold text-purple-700">6. Auto Job Order Creation</h3>
                 <p class="text-sm text-gray-600 mt-1">Automatic job order generation upon approval</p>
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             </div>
         </div>
 
@@ -309,12 +300,11 @@
     </div>
     @endif
 
-<<<<<<< HEAD
     <!-- Feedback Overview Section -->
     @if(isset($feedbackData))
     <div class="mb-8">
         <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-            <span class="mr-3">💬</span>
+            <span class="mr-3">ðŸ’¬</span>
             Requestor Feedback & Ratings
         </h2>
         
@@ -323,9 +313,9 @@
             <div class="stats-card text-center bg-gradient-to-br from-yellow-400 to-yellow-600 text-white">
                 <div class="text-2xl font-bold mb-2">
                     @if($feedbackData['statistics']['average_rating'] > 0)
-                        ⭐ {{ $feedbackData['statistics']['average_rating'] }}/5
+                        â­ {{ $feedbackData['statistics']['average_rating'] }}/5
                     @else
-                        ⭐ N/A
+                        â­ N/A
                     @endif
                 </div>
                 <div class="text-yellow-100">Average Rating</div>
@@ -371,7 +361,7 @@
                                             <h4 class="font-semibold text-gray-900 mr-3">{{ $feedback['job_order_number'] }}</h4>
                                             <div class="flex items-center">
                                                 @for($i = 1; $i <= 5; $i++)
-                                                    <span class="text-lg {{ $i <= $feedback['rating'] ? 'text-yellow-400' : 'text-gray-300' }}">⭐</span>
+                                                    <span class="text-lg {{ $i <= $feedback['rating'] ? 'text-yellow-400' : 'text-gray-300' }}">â­</span>
                                                 @endfor
                                                 <span class="ml-2 text-sm text-gray-600">({{ $feedback['rating'] }}/5)</span>
                                             </div>
@@ -396,7 +386,7 @@
                     </div>
                 @else
                     <div class="text-center py-8 text-gray-500">
-                        <span class="text-4xl mb-4 block">📝</span>
+                        <span class="text-4xl mb-4 block">ðŸ“</span>
                         <p>No feedback submissions yet</p>
                     </div>
                 @endif
@@ -411,7 +401,7 @@
                         <div class="flex items-center">
                             <div class="flex items-center w-12">
                                 <span class="text-sm font-medium">{{ $rating['stars'] }}</span>
-                                <span class="text-yellow-400 ml-1">⭐</span>
+                                <span class="text-yellow-400 ml-1">â­</span>
                             </div>
                             <div class="flex-1 mx-3">
                                 <div class="bg-gray-200 rounded-full h-4">
@@ -444,7 +434,7 @@
         @if(count($feedbackData['jobs_needing_action']) > 0)
             <div class="mt-6 bg-red-50 border border-red-200 rounded-lg p-6">
                 <h3 class="text-lg font-bold mb-4 text-red-800 flex items-center">
-                    <span class="mr-2">⚠️</span>
+                    <span class="mr-2">âš ï¸</span>
                     Jobs Requiring Further Action
                 </h3>
                 
@@ -455,7 +445,7 @@
                                 <h4 class="font-semibold text-gray-900">{{ $job['job_order_number'] }}</h4>
                                 <div class="flex items-center">
                                     @for($i = 1; $i <= 5; $i++)
-                                        <span class="text-sm {{ $i <= $job['rating'] ? 'text-yellow-400' : 'text-gray-300' }}">⭐</span>
+                                        <span class="text-sm {{ $i <= $job['rating'] ? 'text-yellow-400' : 'text-gray-300' }}">â­</span>
                                     @endfor
                                     <span class="ml-1 text-sm text-gray-600">({{ $job['rating'] }}/5)</span>
                                 </div>
@@ -475,7 +465,7 @@
         @if(count($feedbackData['low_rated_jobs']) > 0)
             <div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                 <h3 class="text-lg font-bold mb-4 text-yellow-800 flex items-center">
-                    <span class="mr-2">⭐</span>
+                    <span class="mr-2">â­</span>
                     Low-Rated Jobs (3 stars or below)
                 </h3>
                 
@@ -486,7 +476,7 @@
                                 <h4 class="font-semibold text-gray-900">{{ $job['job_order_number'] }}</h4>
                                 <div class="flex items-center">
                                     @for($i = 1; $i <= 5; $i++)
-                                        <span class="text-sm {{ $i <= $job['rating'] ? 'text-yellow-400' : 'text-gray-300' }}">⭐</span>
+                                        <span class="text-sm {{ $i <= $job['rating'] ? 'text-yellow-400' : 'text-gray-300' }}">â­</span>
                                     @endfor
                                     <span class="ml-1 text-sm text-gray-600">({{ $job['rating'] }}/5)</span>
                                 </div>
@@ -504,8 +494,6 @@
     </div>
     @endif
 
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     <!-- Recommendations -->
     @if($recommendations && count($recommendations) > 0)
     <div class="bg-white rounded-lg shadow-lg p-6">
@@ -555,22 +543,18 @@
             View All Requests
         </a>
         
-<<<<<<< HEAD
         <a href="{{ route('pfmo.manage-employees') }}" 
            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             <i class="fas fa-users me-2"></i>Manage Employees
-=======
         <a href="{{ route('pfmo.metrics') }}" 
            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Performance Reports
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         </a>
         
         <a href="{{ route('approvals.index') }}" 
            class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Approval Queue
         </a>
-<<<<<<< HEAD
 
         @if(Auth::user()->position === 'Head')
         <a href="{{ route('pfmo.supervisors') }}" 
@@ -578,8 +562,6 @@
             Manage Supervisors
         </a>
         @endif
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     </div>
 </div>
 @endsection
