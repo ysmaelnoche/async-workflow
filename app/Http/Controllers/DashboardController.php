@@ -118,6 +118,7 @@ class DashboardController extends Controller
                 ? round(($totalApproved / $totalFinalized) * 100)
                 : 0;
 
+<<<<<<< HEAD
             // Get feedback data for PFMO users only
             $recentFeedback = collect();
             $averageRating = null;
@@ -163,6 +164,8 @@ class DashboardController extends Controller
                 }
             }
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Debug information
             \Log::info('Dashboard Query Info', [
                 'user_id' => $user->accnt_id,
@@ -182,10 +185,13 @@ class DashboardController extends Controller
                 'yearlyCount' => $yearlyCount,
                 'avgProcessingTime' => $avgProcessingTime,
                 'approvalRate' => $approvalRate,
+<<<<<<< HEAD
                 'recentFeedback' => $recentFeedback,
                 'averageRating' => $averageRating,
                 'totalFeedback' => $totalFeedback,
                 'isPFMOUser' => $user->department && $user->department->dept_code === 'PFMO',
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             ]);
 
         } catch (\Exception $e) {
@@ -201,14 +207,18 @@ class DashboardController extends Controller
                 'yearlyCount' => 0,
                 'avgProcessingTime' => 'N/A',
                 'approvalRate' => 0,
+<<<<<<< HEAD
                 'recentFeedback' => collect(),
                 'averageRating' => null,
                 'totalFeedback' => 0,
                 'isPFMOUser' => false,
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 'error' => 'There was an error loading the dashboard. Please try again later.'
             ]);
         }
     }
+<<<<<<< HEAD
 
     /**
      * Load more feedback for PFMO users (AJAX endpoint)
@@ -270,4 +280,6 @@ class DashboardController extends Controller
             return response()->json(['success' => false, 'message' => 'Error loading feedback']);
         }
     }
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 }

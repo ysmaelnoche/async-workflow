@@ -40,10 +40,16 @@
                             @endif
                         </x-nav-link>
 
+<<<<<<< HEAD
                         {{-- PFMO Job Orders Link --}}
                         @if(Auth::user()->department && Auth::user()->department->dept_code === 'PFMO')
                             <x-nav-link :href="route('job-orders.index')" :active="request()->routeIs('job-orders.index') || request()->routeIs('job-orders.show')">
                                 {{ __('Job Orders') }}
+=======
+                        @if((Auth::user()->position === 'Head' || Auth::user()->position === 'VPAA') && Auth::user()->accessRole === 'Approver')
+                            <x-nav-link :href="route('approver-assignments.index')" :active="request()->routeIs('approver-assignments.index')">
+                                {{ __('Manage Approvers') }}
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             </x-nav-link>
                         @endif
                     @endif
@@ -148,6 +154,7 @@
                         </span>
                     @endif
                 </x-responsive-nav-link>
+<<<<<<< HEAD
 
                 {{-- PFMO Job Orders Link --}}
                 @if(Auth::user()->department && Auth::user()->department->dept_code === 'PFMO')
@@ -158,6 +165,15 @@
 
                 {{-- Job Order Feedback Link (for all users) --}}
             @endif
+=======
+                 @if((Auth::user()->position === 'Head' || Auth::user()->position === 'VPAA') && Auth::user()->accessRole === 'Approver')
+                    <x-responsive-nav-link :href="route('approver-assignments.index')" :active="request()->routeIs('approver-assignments.index')">
+                        {{ __('Manage Approvers') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endif
+
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             {{-- Admin Responsive Links --}}
             @if(Auth::user()->accessRole === 'Admin')
                 <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">

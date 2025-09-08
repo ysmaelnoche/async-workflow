@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // Enhanced Notification badge updater with animations and better UX
+=======
+// Notification badge updater
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 document.addEventListener('DOMContentLoaded', function() {
     // Check if the user has approval access (check if the Approvals link exists)
     const approvalsLink = document.querySelector('a[href*="approvals.index"]');
@@ -6,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Log only in debug mode
     if (window.debugMode) {
+<<<<<<< HEAD
         console.log('🔔 Enhanced notification badge updater initialized');
     }
     
@@ -204,11 +209,42 @@ document.addEventListener('DOMContentLoaded', function() {
             toast.style.animation = 'slideOutRight 0.3s ease-in forwards';
             setTimeout(() => toast.remove(), 300);
         });
+=======
+        console.log('Notification badge updater initialized');
+    }
+    
+    // Function to update notification badge
+    function updateNotificationBadge() {
+        if (window.debugMode) {
+            console.log('Fetching notification count...');
+        }
+        fetch('/notifications/count')
+            .then(response => response.json())
+            .then(data => {
+                const count = data.count;
+                if (window.debugMode) {
+                    console.log('Notification count:', count);
+                }
+                
+                // Only update the badge in the Approvals menu
+                const badge = approvalsLink.querySelector('.notification-badge');
+                if (badge) {
+                    if (count > 0) {
+                        badge.textContent = count;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                }
+            })
+            .catch(error => console.error('Error fetching notification count:', error));
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     }
     
     // Update immediately and then periodically
     updateNotificationBadge();
     
+<<<<<<< HEAD
     // Update every 30 seconds with exponential backoff on errors
     let updateInterval = 30000;
     let errorCount = 0;
@@ -306,3 +342,8 @@ window.refreshNotificationBadge = function() {
     const event = new CustomEvent('refreshNotifications');
     document.dispatchEvent(event);
 };
+=======
+    // Update every 30 seconds
+    setInterval(updateNotificationBadge, 30000);
+});
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80

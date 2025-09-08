@@ -49,7 +49,11 @@
                                                 <div class="
                                                     @if($approval->action === 'Rejected') bg-red-500
                                                     @elseif($approval->action === 'Approved') bg-green-500
+<<<<<<< HEAD
                                                     @elseif($approval->action === 'Send Feedback') bg-green-500
+=======
+                                                    @elseif($approval->action === 'Approved') bg-green-500
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                     @else bg-gray-500
                                                     @endif
                                                     rounded-full w-8 h-8 flex items-center justify-center ring-4 ring-white dark:ring-gray-800">
@@ -212,7 +216,11 @@
                                 @foreach ($formRequest->approvals->sortBy('action_date') as $approval)
                                     @if($approval->action !== 'Submitted' && $approval->action !== 'Evaluate')
                                         <div class="signature-card bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+<<<<<<< HEAD
                                             @if($approval->signature_data && (strpos($approval->signature_data, 'data:image/') === 0 || filter_var($approval->signature_data, FILTER_VALIDATE_URL)))
+=======
+                                            @if($approval->signature_data)
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                 <div class="signature-image-container h-24 flex items-center justify-center border-b border-gray-100 dark:border-gray-700">
                                                     <img src="{{ $approval->signature_data }}"
                                                          alt="Digital Signature"
@@ -292,7 +300,11 @@
                                 @foreach($formRequest->approvals->sortBy('action_date') as $approval)
                                     @if($approval->action !== 'Submitted' && $approval->action !== 'Evaluate')
                                     <div class="signature-card bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+<<<<<<< HEAD
                                         @if($approval->signature_data && (strpos($approval->signature_data, 'data:image/') === 0 || filter_var($approval->signature_data, FILTER_VALIDATE_URL)))
+=======
+                                        @if($approval->signature_data)
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                             <div class="signature-image-container h-24 flex items-center justify-center border-b border-gray-100 dark:border-gray-700">
                                                 <img src="{{ $approval->signature_data }}" alt="Digital Signature" class="max-h-20 object-contain">
                                             </div>

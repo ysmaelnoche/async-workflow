@@ -1,3 +1,4 @@
+<<<<<<< HEAD
     <!-- Custom CSS for Signature Block -->
     <style>
         .signature-block {
@@ -29,6 +30,8 @@
         }
     </style>
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     <!-- Approval Error Modal -->
     <div id="approvalErrorModal" class="fixed inset-0 bg-gray-900 bg-opacity-30 hidden overflow-y-auto h-full w-full z-70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 relative">
@@ -56,6 +59,7 @@ function showApprovalError(message) {
         modal.classList.remove('hidden');
     }
 }
+<<<<<<< HEAD
 
 function showValidationError(message) {
     // Create validation alert element with different styling
@@ -91,6 +95,8 @@ function showValidationError(message) {
         }
     }, 5000);
 }
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 function closeApprovalErrorModal() {
     const modal = document.getElementById('approvalErrorModal');
     if (modal) modal.classList.add('hidden');
@@ -149,6 +155,7 @@ function closeModal() {
         modal.classList.add('hidden');
     }
 }
+<<<<<<< HEAD
 
 function showSuccessMessage(message) {
     // Create success alert element
@@ -179,6 +186,8 @@ function showSuccessMessage(message) {
         }, 300);
     }, 3000);
 }
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 </script>
 <!-- Feedback Final Confirmation Modal -->
 <div id="feedbackFinalConfirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-30 hidden overflow-y-auto h-full w-full z-80 backdrop-blur-sm flex items-center justify-center p-4">
@@ -233,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateCountAndValidation() {
         var val = feedbackInput.value;
+<<<<<<< HEAD
         var isValid = true;
         var validationMessages = [];
         
@@ -321,6 +331,16 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             validationDisplay.innerHTML = '';
             readyText.textContent = '';
+=======
+        confirmCharCount.textContent = val.length + ' characters';
+        if (val.length < 10) {
+            confirmCharCount.classList.add('text-red-500');
+            readyText.textContent = '';
+            submitBtn.disabled = false;
+        } else {
+            confirmCharCount.classList.remove('text-red-500');
+            readyText.textContent = '✓ Ready to submit';
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             submitBtn.disabled = false;
         }
     }
@@ -330,6 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     feedbackForm.addEventListener('submit', function(e) {
         e.preventDefault();
         var val = feedbackInput.value;
+<<<<<<< HEAD
         
         // Comprehensive validation before showing any modal
         var validationResult = validateFeedbackContent(val);
@@ -340,6 +361,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         if (val.length < 10) {
             if (shortWarningModal && shortCharCount) {
                 shortCharCount.textContent = val.length;
@@ -353,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             // Show confirmation modal
             document.getElementById('finalFeedbackPreview').textContent = val;
+<<<<<<< HEAD
             // Close the original feedback modal first
             closeFeedbackConfirmModal();
             // Add a small delay for smooth transition
@@ -406,6 +430,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
+=======
+            document.getElementById('feedbackFinalConfirmModal').classList.remove('hidden');
+        }
+    });
+
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     window.closeFinalFeedbackConfirmModal = function() {
         document.getElementById('feedbackFinalConfirmModal').classList.add('hidden');
     };
@@ -413,8 +443,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var val = feedbackInput.value;
         feedbackFormComments.value = val;
         document.getElementById('feedbackFinalConfirmModal').classList.add('hidden');
+<<<<<<< HEAD
         // Also ensure the original feedback modal is closed
         closeFeedbackConfirmModal();
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         feedbackForm.submit();
     };
     window.closeShortFeedbackWarning = function() {
@@ -422,6 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     window.proceedWithShortFeedback = function() {
         var val = feedbackInput.value;
+<<<<<<< HEAD
         
         // Perform final validation before submission
         if (val.length < 10) {
@@ -449,6 +483,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Submit the form
         feedbackForm.submit();
+=======
+        // Submit feedback (simulate form submission)
+        // TODO: Replace with actual AJAX or form submit
+        alert('Feedback submitted: ' + val);
+        closeShortFeedbackWarning();
+        closeFeedbackConfirmModal();
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     };
 });
 </script>
@@ -520,7 +561,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     @if($approval->action === 'Rejected') bg-red-500
                                                     @elseif($approval->action === 'Approved') bg-green-500
                                                     @elseif($approval->action === 'Evaluate') bg-blue-500
+<<<<<<< HEAD
                                                     @elseif($approval->action === 'Send Feedback') bg-green-500
+=======
+                                                    @elseif($approval->action === 'Send Feedback') bg-yellow-500
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                     @else bg-gray-500
                                                     @endif
                                                     rounded-full w-8 h-8 flex items-center justify-center ring-4 ring-white dark:ring-gray-800
@@ -549,7 +594,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     {{ $approval->action }} by {{ $approval->approver->employeeInfo->FirstName }} {{ $approval->approver->employeeInfo->LastName }}
                                                     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">({{ $approval->approver->position }})</span>
                                                 </div>
+<<<<<<< HEAD
                                                 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                 @if($approval->comments)
                                                     <div class="mt-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
                                                         "{{ $approval->comments }}"
@@ -581,6 +629,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     $subDeptName = 'PFMO Sub-Department';
                                                     if ($formRequest->assigned_sub_department) {
                                                         switch($formRequest->assigned_sub_department) {
+<<<<<<< HEAD
                                                             case 'warehouse':
                                                                 $subDeptName = 'PFMO Warehouse Section (ROY MORALES)';
                                                                 break;
@@ -598,6 +647,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                                                 break;
                                                             default:
                                                                 $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Section';
+=======
+                                                            case 'electrical':
+                                                                $subDeptName = 'PFMO Electrical Department';
+                                                                break;
+                                                            case 'hvac':
+                                                                $subDeptName = 'PFMO HVAC Department';
+                                                                break;
+                                                            case 'general_services':
+                                                                $subDeptName = 'PFMO General Services';
+                                                                break;
+                                                            default:
+                                                                $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Department';
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                         }
                                                     }
                                                 @endphp
@@ -678,7 +740,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     @if ($finalApprovals->count() > 0)
                         <div class="border-b pb-4 mb-4">
                             <h3 class="text-lg font-semibold mb-4">Signatures</h3>
+<<<<<<< HEAD
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+=======
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                 @foreach ($finalApprovals->sortBy('action_date') as $approval)
                                     @php
                                         $approverUser = $approval->approver;
@@ -686,6 +752,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         $isBase64 = isset($approval->signature_data) && \Illuminate\Support\Str::startsWith($approval->signature_data, ['data:image/png;base64,', 'data:image/jpeg;base64,']);
                                         $isUrl = isset($approval->signature_data) && filter_var($approval->signature_data, FILTER_VALIDATE_URL);
                                     @endphp
+<<<<<<< HEAD
                                     
                                     {{-- Traditional Signature Block --}}
                                     <div class="signature-block relative bg-gradient-to-b from-gray-50 to-white border border-gray-200 rounded-lg p-6 h-48 flex flex-col justify-between shadow-sm">
@@ -762,6 +829,36 @@ document.addEventListener('DOMContentLoaded', function() {
                                         {{-- Date --}}
                                         <div class="absolute bottom-1 left-2 text-xs text-gray-500">
                                             {{ \Carbon\Carbon::parse($approval->action_date)->setTimezone(config('app.timezone_display', 'Asia/Manila'))->format('M j, Y') }}
+=======
+                                    @if (!empty($approval->signature_data) && ($isBase64 || $isUrl))
+                                        <div class="border rounded-lg p-4 flex flex-col items-center justify-between h-48">
+                                            <div class="flex-grow flex items-center justify-center w-full mb-2"> 
+                                                <img src="{{ $approval->signature_data }}" alt="Digital Signature" class="max-w-full max-h-24 object-contain">
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="font-medium text-sm">{{ $displayName }}</p>
+                                                <p class="text-xs">
+                                                    <span class="px-2 py-0.5 rounded text-xs
+                                                        @if($approval->action === 'Rejected') bg-red-100 text-red-800
+                                                        @elseif($approval->action === 'Approved') bg-green-100 text-green-800
+                                                        @endif">
+                                                        {{ $approval->action }}
+                                                    </span>
+                                                    @if ($approverUser)
+                                                        <span class="text-gray-500">({{ $approverUser->position }})</span>
+                                                    @endif
+                                                </p>
+                                                <p class="text-xs text-gray-500 mt-0.5">{{ \Carbon\Carbon::parse($approval->action_date)->setTimezone(config('app.timezone_display', 'Asia/Manila'))->format('M j, Y, g:i A') }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                                </span>
+                                                @if ($approverUser)
+                                                    <span class="text-gray-500">({{ $approverUser->position }})</span>
+                                                @endif
+                                            </p>
+                                            <p class="text-xs text-gray-500 mt-0.5">{{ \Carbon\Carbon::parse($approval->action_date)->setTimezone(config('app.timezone_display', 'Asia/Manila'))->format('M j, Y, g:i A') }}</p>
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                         </div>
                                     </div>
                                 @endforeach
@@ -769,6 +866,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     @endif
 
+<<<<<<< HEAD
                     {{-- DEBUG: Always show debugging information for troubleshooting --}}
                     <div class="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4">
                         <strong>🔍 DEBUG INFO (Always Visible):</strong><br>
@@ -788,11 +886,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     {{-- Approval Actions --}}
                     @if($canTakeAction)
                         <div class="border-b pb-4 mb-4">
                             <h3 class="text-lg font-semibold mb-4">Take Action</h3>
+<<<<<<< HEAD
                             
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             <div class="flex space-x-4">
                                 @php
                                     $user = Auth::user();
@@ -810,7 +913,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                     </button>
                                 @elseif($canSendFeedback)
                                     {{-- PFMO Sub-department staff get Send Feedback option only (no reject) --}}
+<<<<<<< HEAD
                                     <button onclick="openFeedbackConfirmModal()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+=======
+                                    <button onclick="openFeedbackConfirmModal()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                         Send Feedback
                                     </button>
                                 @elseif($canFinalDecision)
@@ -1006,6 +1113,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                                             <!-- Text Style Signature Method -->
                                             <div id="textSignatureMethodShow">
+<<<<<<< HEAD
                                                 <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-4">
                                                     <div id="signatureStyles" class="grid grid-cols-1 gap-3 max-h-60 overflow-y-auto pr-2">
                                                         {{-- Signature styles will be loaded here --}}
@@ -1084,6 +1192,39 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         Select a style and your name will be converted to a signature (scroll for more options)
                                                     </div>
                                                     <span id="signatureErrorShow" class="hidden text-xs text-red-500 block text-center mt-2">
+=======
+                                                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-2">
+                                                    <div id="signatureStyles" class="flex flex-row justify-center items-center gap-6">
+                                                        {{-- Signature styles will be loaded here --}}
+                                                    </div>
+                                                    <style>
+                                                        #signatureStyles .signature-preview {
+                                                            min-width: 120px;
+                                                            height: 32px;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            font-size: 1.1rem;
+                                                            font-weight: 700;
+                                                            padding: 0.2rem 0.6rem;
+                                                            border-radius: 9999px;
+                                                            border: 2px solid #e5e7eb;
+                                                            background: #f3f4f6;
+                                                            color: #222;
+                                                            cursor: pointer;
+                                                            transition: box-shadow 0.2s, border-color 0.2s;
+                                                        }
+                                                        #signatureStyles .signature-preview.bg-blue-100 {
+                                                            box-shadow: 0 0 0 4px #3b82f6;
+                                                            border-color: #3b82f6;
+                                                            background: #e0f2fe;
+                                                        }
+                                                    </style>
+                                                    <div class="mt-1 text-xs text-gray-500 dark:text-gray-400 text-center">
+                                                        Select a style and your name will be converted to a signature
+                                                    </div>
+                                                    <span id="signatureErrorShow" class="hidden text-xs text-red-500 block text-center mt-1">
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                         Please select a signature style
                                                     </span>
                                                 </div>
@@ -1405,6 +1546,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Signature style selection logic
     // Example: Load available styles (replace with dynamic if needed)
+<<<<<<< HEAD
     // Get signature styles from database
     const styles = @json($signatureStyles->map(function($style) {
         return [
@@ -1414,12 +1556,20 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
     }));
     
+=======
+    const styles = [
+        { id: 1, name: 'Cursive', font: 'Pacifico' },
+        { id: 2, name: 'Bold', font: 'Arial Black' },
+        { id: 3, name: 'Classic', font: 'Times New Roman' }
+    ];
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     const styleContainer = document.getElementById('signatureStyles');
     if (styleContainer) {
         styleContainer.innerHTML = '';
         styles.forEach(style => {
             const div = document.createElement('div');
             div.className = 'signature-preview';
+<<<<<<< HEAD
             
             // Apply the font family with fallbacks
             const fontFamily = `"${style.font_family}", cursive, serif`;
@@ -1470,6 +1620,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+=======
+            div.style.fontFamily = style.font;
+            div.textContent = document.getElementById('name') ? document.getElementById('name').value : 'Signature';
+            div.onclick = function() {
+                document.getElementById('signatureStyle').value = style.id;
+                // Highlight selected
+                Array.from(styleContainer.children).forEach(child => child.classList.remove('bg-blue-100'));
+                div.classList.add('bg-blue-100');
+            };
+            styleContainer.appendChild(div);
+        });
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     }
 
     // Before submit, save signature data
@@ -1508,6 +1670,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             // AJAX submit for approval
             e.preventDefault();
+<<<<<<< HEAD
             
             // Disable submit button to prevent double submission
             const submitBtn = document.getElementById('submitActionBtn');
@@ -1520,6 +1683,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 Processing...
             `;
             
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             const formData = new FormData(actionForm);
             fetch(actionForm.action, {
                 method: 'POST',
@@ -1529,6 +1694,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: formData
             })
+<<<<<<< HEAD
             .then(response => {
                 console.log('Response status:', response.status);
                 console.log('Response headers:', response.headers);
@@ -1600,6 +1766,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 showApprovalError(errorMessage);
+=======
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    let msg = data.message || 'Approval failed.';
+                    if (data.errors && Array.isArray(data.errors)) {
+                        msg += '<ul class="mt-2 list-disc list-inside text-sm">' + data.errors.map(e => `<li>${e}</li>`).join('') + '</ul>';
+                    }
+                    showApprovalError(msg);
+                }
+            })
+            .catch(err => {
+                showApprovalError('An unexpected error occurred. Please try again.');
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             });
         };
     }

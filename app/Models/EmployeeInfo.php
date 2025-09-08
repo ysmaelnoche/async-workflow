@@ -25,6 +25,7 @@ class EmployeeInfo extends Model
         'Email',
     ];
 
+<<<<<<< HEAD
     /**
      * Get the employee's full name.
      */
@@ -40,6 +41,8 @@ class EmployeeInfo extends Model
         return implode(' ', $parts);
     }
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'Emp_No', 'Emp_No');

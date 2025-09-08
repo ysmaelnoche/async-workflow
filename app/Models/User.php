@@ -8,7 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Relations\HasMany;
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 use App\Models\SignatureStyle; // Add this line
 
 class User extends Authenticatable
@@ -31,6 +34,7 @@ class User extends Authenticatable
     protected $primaryKey = 'accnt_id';
 
     /**
+<<<<<<< HEAD
      * The "type" of the primary key ID.
      *
      * @var string
@@ -45,6 +49,8 @@ class User extends Authenticatable
     public $incrementing = true;
 
     /**
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -123,6 +129,7 @@ class User extends Authenticatable
         return $this->hasOne(ApproverPermission::class, 'accnt_id', 'accnt_id');
     }
 
+<<<<<<< HEAD
     public function subDepartment(): BelongsTo
     {
         return $this->belongsTo(SubDepartment::class, 'sub_department_id');
@@ -136,6 +143,8 @@ class User extends Authenticatable
         return $this->hasMany(JobOrder::class, 'assigned_to', 'accnt_id');
     }
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     /**
      * Check if the user can approve requests with a specific status.
      */
@@ -184,6 +193,7 @@ class User extends Authenticatable
         };
     }
 
+<<<<<<< HEAD
     /**
      * Check if the user can submit proxy requests for employees.
      */
@@ -208,6 +218,8 @@ class User extends Authenticatable
         return $this->position === 'Secretary';
     }
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     // Define relationships if needed, for example:
     // public function employee()
     // {

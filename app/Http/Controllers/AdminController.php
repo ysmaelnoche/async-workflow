@@ -182,14 +182,22 @@ class AdminController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $rows = $sheet->toArray();
         $header = array_map('trim', $rows[0]);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Handle potential missing headers
         for ($i = 0; $i < count($header); $i++) {
             if (empty($header[$i])) {
                 $header[$i] = "col_" . $i; // Name empty columns as col_0, col_1, etc.
             }
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         $dataRows = array_slice($rows, 1);
 
         // Debug: Log the first 3 rows to storage/logs/laravel.log
@@ -205,16 +213,26 @@ class AdminController extends Controller
 
         foreach ($dataRows as $rowIndex => $row) {
             $totalRowsProcessed++;
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Skip empty rows completely
             if (empty(array_filter($row))) {
                 \Log::info("ETL Import - Skipping completely empty row {$rowIndex}");
                 $totalRowsProcessed--; // Don't count empty rows
                 continue;
             }
+<<<<<<< HEAD
 
             $row = array_combine($header, $row);
 
+=======
+            
+            $row = array_combine($header, $row);
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Log each row for debugging
             \Log::info("ETL Import - Processing Row {$rowIndex}", [
                 'Emp_No' => $row['Emp_No'] ?? 'MISSING',
@@ -222,7 +240,11 @@ class AdminController extends Controller
                 'FirstName' => $row['FirstName'] ?? 'MISSING',
                 'LastName' => $row['LastName'] ?? 'MISSING'
             ]);
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if (empty($row['Emp_No']) || empty($row['dept_name'])) {
                 \Log::warning("ETL Import - Skipping row {$rowIndex} - Missing Emp_No or dept_name", [
                     'Emp_No' => $row['Emp_No'] ?? 'NULL',
@@ -234,12 +256,20 @@ class AdminController extends Controller
             // Find department by dept_name (case-insensitive and trimmed)
             $deptName = trim($row['dept_name']);
             $department = Department::whereRaw('LOWER(TRIM(dept_name)) = ?', [strtolower($deptName)])->first();
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if (!$department) {
                 // Try alternative matching - by dept_code if provided
                 $department = Department::whereRaw('LOWER(TRIM(dept_code)) = ?', [strtolower($deptName)])->first();
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if (!$department) {
                 \Log::warning('ETL Import - Department not found', [
                     'dept_name_provided' => $deptName,
@@ -247,7 +277,11 @@ class AdminController extends Controller
                 ]);
                 continue; // skip if department not found
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             \Log::info("ETL Import - Department found", [
                 'provided' => $deptName,
                 'matched' => $department->dept_name,
@@ -260,14 +294,22 @@ class AdminController extends Controller
             $title = '';
             $priorityColumns = ['position', 'Position']; // Check position column first
             $fallbackColumns = ['Title', 'Titles', 'Role', 'Designation', 'title', 'titles'];
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // SPECIFIC DEBUG: Check if position column exists
             \Log::info("ETL Import - Position Column Debug", [
                 'position_lowercase' => $row['position'] ?? 'NOT_FOUND',
                 'Position_uppercase' => $row['Position'] ?? 'NOT_FOUND',
                 'all_keys' => array_keys($row)
             ]);
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // First try priority columns (position)
             foreach ($priorityColumns as $colName) {
                 if (isset($row[$colName]) && !empty(trim($row[$colName]))) {
@@ -276,7 +318,11 @@ class AdminController extends Controller
                     break;
                 }
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // If not found in priority columns, try fallback columns
             if (empty($title)) {
                 foreach ($fallbackColumns as $colName) {
@@ -286,7 +332,11 @@ class AdminController extends Controller
                         \Log::info("ETL Import - Found title in fallback column: {$colName}", ['value' => $title]);
                         break;
                     }
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     // Check case-insensitive match
                     foreach ($row as $actualKey => $value) {
                         if (strtolower($actualKey) === strtolower($colName) && !empty(trim($value))) {
@@ -297,13 +347,18 @@ class AdminController extends Controller
                     }
                 }
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // If no standard column found, check for any column containing position-like values
             if (empty($title)) {
                 foreach ($row as $key => $value) {
                     if (!empty(trim($value))) {
                         $cleanValue = strtolower(trim($value));
                         // Check if any position-related keywords are found
+<<<<<<< HEAD
                         if (
                             str_contains($cleanValue, 'head') ||
                             str_contains($cleanValue, 'staff') ||
@@ -312,6 +367,14 @@ class AdminController extends Controller
                             str_contains($cleanValue, 'vpaa') ||
                             str_contains($cleanValue, 'vice president')
                         ) {
+=======
+                        if (str_contains($cleanValue, 'head') || 
+                            str_contains($cleanValue, 'staff') || 
+                            str_contains($cleanValue, 'director') || 
+                            str_contains($cleanValue, 'chief') || 
+                            str_contains($cleanValue, 'vpaa') || 
+                            str_contains($cleanValue, 'vice president')) {
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             $title = $cleanValue;
                             \Log::info("ETL Import - Found position value in column: {$key}", ['value' => $title]);
                             break;
@@ -319,7 +382,11 @@ class AdminController extends Controller
                     }
                 }
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Enhanced debugging for title detection
             \Log::info("ETL Import - Title Analysis", [
                 'All_Row_Data' => $row,
@@ -327,7 +394,11 @@ class AdminController extends Controller
                 'Title_Length' => strlen($title),
                 'Available_Keys' => array_keys($row)
             ]);
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Check if title indicates Head position
             if (str_contains($title, 'head') || str_contains($title, 'director') || str_contains($title, 'chief')) {
                 $position = 'Head';
@@ -335,17 +406,23 @@ class AdminController extends Controller
             } elseif (str_contains($title, 'vpaa') || str_contains($title, 'vice president')) {
                 $position = 'VPAA';
                 \Log::info("ETL Import - Detected as VPAA", ['title' => $title]);
+<<<<<<< HEAD
             } elseif (str_contains($title, 'secretary')) {  // <-- ADD THIS
                 $position = 'Secretary';
                 \Log::info("ETL Import - Detected as Secretary", ['title' => $title]);
             } elseif (str_contains($title, 'staff')) {
                 $position = 'Staff';
+=======
+            } elseif (str_contains($title, 'staff')) {
+                $position = 'Staff';  // Explicitly handle Staff
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 \Log::info("ETL Import - Detected as Staff", ['title' => $title]);
             } else {
                 $position = 'Staff';  // Default to Staff for unrecognized titles
                 \Log::info("ETL Import - Defaulted to Staff", ['title' => $title, 'reason' => 'No matching keywords found']);
             }
 
+<<<<<<< HEAD
             // Set access role - Head and VPAA are approvers, Secretary is requestor, Staff are viewers
             if ($position === 'Head' || $position === 'VPAA') {
                 $accessRole = 'Approver';
@@ -355,6 +432,11 @@ class AdminController extends Controller
                 $accessRole = 'Viewer';
             }
 
+=======
+            // Set access role - Head and VPAA are approvers, Staff are viewers
+            $accessRole = ($position === 'Head' || $position === 'VPAA') ? 'Approver' : 'Viewer';
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             \Log::info("ETL Import - Position determined", [
                 'Title_Used' => $title,
                 'Determined_Position' => $position,
@@ -363,7 +445,11 @@ class AdminController extends Controller
 
             // Check if employee already exists in tb_employeeinfo
             $existingEmployee = EmployeeInfo::where('Emp_No', $row['Emp_No'])->first();
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if ($existingEmployee) {
                 \Log::info('ETL Import - Employee already exists, skipping', [
                     'Emp_No' => $existingEmployee->Emp_No,
@@ -375,7 +461,11 @@ class AdminController extends Controller
 
             // Check if user account already exists in tb_account 
             $existingUser = User::where('Emp_No', $row['Emp_No'])->first();
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if ($existingUser) {
                 \Log::info('ETL Import - User account already exists, skipping', [
                     'Emp_No' => $employee->Emp_No,

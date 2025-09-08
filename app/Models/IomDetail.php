@@ -21,10 +21,13 @@ class IomDetail extends Model
         'priority',
         'purpose',
         'body',
+<<<<<<< HEAD
         'iom_type',
         'description',
         'location',
         'urgency',
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     ];
 
     protected $casts = [

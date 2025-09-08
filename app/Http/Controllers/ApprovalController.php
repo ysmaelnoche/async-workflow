@@ -16,7 +16,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\SignatureStyle;
 use App\Models\Department;
 use App\Services\ApprovalCacheService; // Add cache service
+<<<<<<< HEAD
 use App\Services\JobOrderService; // Add job order service
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 use Exception;
 
 class ApprovalController extends Controller
@@ -639,6 +642,7 @@ class ApprovalController extends Controller
                         // For In Progress requests, mark as Approved
                         $formRequest->status = 'Approved';
                         $formRequest->current_approver_id = null;
+<<<<<<< HEAD
 
                         // Auto-create job order if this request needs manual work
                         if (JobOrderService::needsJobOrder($formRequest)) {
@@ -655,6 +659,8 @@ class ApprovalController extends Controller
                                 ]);
                             }
                         }
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     }
                 } else {
                     // Handle rejection
@@ -726,8 +732,11 @@ class ApprovalController extends Controller
 
         // Debug log
         \Log::info('Show method info:', [
+<<<<<<< HEAD
             'route_name' => request()->route()->getName(),
             'request_url' => request()->url(),
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             'user_id' => $user->accnt_id,
             'position' => $user->position,
             'department' => $userDepartment ? [
@@ -849,29 +858,49 @@ class ApprovalController extends Controller
         $canEvaluate = false;
         $canSendFeedback = false;
         $canFinalDecision = false;
+<<<<<<< HEAD
 
         // Check if this is a PFMO request
         $isPFMORequest = $formRequest->toDepartment && $formRequest->toDepartment->dept_code === 'PFMO';
         $isPFMOUser = $user->department && $user->department->dept_code === 'PFMO';
 
+=======
+        
+        // Check if this is a PFMO request
+        $isPFMORequest = $formRequest->toDepartment && $formRequest->toDepartment->dept_code === 'PFMO';
+        $isPFMOUser = $user->department && $user->department->dept_code === 'PFMO';
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         if ($isPFMORequest && $isPFMOUser) {
             // PFMO Head can "Evaluate" when status is "In Progress" or "Pending Target Department Approval"
             if ($user->position === 'Head' && in_array($formRequest->status, ['In Progress', 'Pending Target Department Approval'])) {
                 $canEvaluate = true;
             }
+<<<<<<< HEAD
 
             // Only PFMO department staff can "Send Feedback" 
             if ($user->position === 'Staff' && in_array($user->accessRole, ['Approver', 'Viewer']) &&
                 $formRequest->status === 'Under Sub-Department Evaluation'
             ) {
 
+=======
+            
+            // Only the designated sub-department staff can "Send Feedback" 
+            if ($user->position === 'Staff' && in_array($user->accessRole, ['Approver', 'Viewer']) && 
+                $formRequest->status === 'Under Sub-Department Evaluation') {
+                
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 // Check if this user's sub-department matches the assigned sub-department
                 if ($user->sub_department_id && $formRequest->assigned_sub_department) {
                     // Get the user's sub-department info
                     $userSubDept = \Illuminate\Support\Facades\DB::table('sub_departments')
                         ->where('id', $user->sub_department_id)
                         ->first();
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     if ($userSubDept) {
                         // Map database sub-department codes to assigned_sub_department values
                         $subDeptMapping = [
@@ -879,9 +908,15 @@ class ApprovalController extends Controller
                             'PFMO-CONS' => 'electrical',  // Construction can handle electrical
                             'PFMO-HOUSEKEEPING' => 'hvac',       // Housekeeping can handle HVAC
                         ];
+<<<<<<< HEAD
 
                         $mappedSubDept = $subDeptMapping[$userSubDept->subdepartment_code] ?? null;
 
+=======
+                        
+                        $mappedSubDept = $subDeptMapping[$userSubDept->subdepartment_code] ?? null;
+                        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         if ($mappedSubDept === $formRequest->assigned_sub_department) {
                             $canSendFeedback = true;
                             \Log::info('PFMO Sub-department permission granted', [
@@ -893,18 +928,30 @@ class ApprovalController extends Controller
                         }
                     }
                 }
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 // Fallback: If no specific sub-department assignment, allow any PFMO staff
                 if (!$canSendFeedback && !$formRequest->assigned_sub_department) {
                     $canSendFeedback = true;
                 }
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // PFMO Head can make "Final Decision" after feedback is received
             if ($user->position === 'Head' && $formRequest->status === 'Awaiting PFMO Decision') {
                 $canFinalDecision = true;
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Set canTakeAction to true if any PFMO action is available
             if ($canEvaluate || $canSendFeedback || $canFinalDecision) {
                 $canTakeAction = true;
@@ -912,10 +959,13 @@ class ApprovalController extends Controller
         }
 
         \Log::info('Final permission values:', [
+<<<<<<< HEAD
             'user_id' => $user->user_id,
             'user_position' => $user->position,
             'user_department' => $user->department ? $user->department->dept_code : null,
             'form_to_department' => $formRequest->toDepartment ? $formRequest->toDepartment->dept_code : null,
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             'canTakeAction' => $canTakeAction,
             'canApprovePending' => $canApprovePending,
             'canApproveInProgress' => $canApproveInProgress,
@@ -924,6 +974,7 @@ class ApprovalController extends Controller
             'canFinalDecision' => $canFinalDecision,
             'form_id' => $formRequest->form_id,
             'form_type' => $formRequest->form_type,
+<<<<<<< HEAD
             'status' => $formRequest->status,
             'isPFMORequest' => $isPFMORequest,
             'isPFMOUser' => $isPFMOUser,
@@ -947,6 +998,23 @@ class ApprovalController extends Controller
     }
 
     public function approve(Request $request, FormRequest $formRequest)
+=======
+            'status' => $formRequest->status
+        ]);
+
+        return view('approvals.show', compact(
+            'formRequest', 
+            'canTakeAction', 
+            'canApprovePending', 
+            'canApproveInProgress',
+            'canEvaluate',
+            'canSendFeedback', 
+            'canFinalDecision'
+        ));
+    }
+
+    public function approve(Request $request, FormRequest $formRequest): RedirectResponse
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     {
         $this->authorize('approve-requests');
         // Comments are optional for approval
@@ -956,16 +1024,26 @@ class ApprovalController extends Controller
     public function evaluate(Request $request, FormRequest $formRequest): RedirectResponse
     {
         $this->authorize('approve-requests');
+<<<<<<< HEAD
 
         $user = Auth::user();
 
         try {
             DB::beginTransaction();
 
+=======
+        
+        $user = Auth::user();
+        
+        try {
+            DB::beginTransaction();
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Validate this is a PFMO request and user has permission
             $targetDepartment = \App\Models\Department::find($formRequest->to_department_id);
             $isPFMORequest = $targetDepartment && $targetDepartment->dept_code === 'PFMO';
             $isPFMOUser = $user->department && $user->department->dept_code === 'PFMO';
+<<<<<<< HEAD
 
             if (!$isPFMORequest || !$isPFMOUser || $user->position !== 'Head') {
                 throw new \Exception('Evaluate action is only available for PFMO Head users.');
@@ -978,16 +1056,37 @@ class ApprovalController extends Controller
             // Change status to Under Sub-Department Evaluation (no approval record needed)
             $formRequest->status = 'Under Sub-Department Evaluation';
 
+=======
+            
+            if (!$isPFMORequest || !$isPFMOUser || $user->position !== 'Head') {
+                throw new \Exception('Evaluate action is only available for PFMO Head users.');
+            }
+            
+            if (!in_array($formRequest->status, ['In Progress', 'Pending Target Department Approval'])) {
+                throw new \Exception('Request cannot be evaluated in its current status.');
+            }
+            
+            // Change status to Under Sub-Department Evaluation (no approval record needed)
+            $formRequest->status = 'Under Sub-Department Evaluation';
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Auto-assign to appropriate sub-department
             if (!$formRequest->assigned_sub_department) {
                 $subDeptAssignment = \App\Services\RequestTypeService::getPFMOSubDepartmentAssignment(
                     $formRequest->title,
                     $formRequest->iomDetails->body ?? ''
                 );
+<<<<<<< HEAD
 
                 if ($subDeptAssignment) {
                     $formRequest->assigned_sub_department = $subDeptAssignment['sub_department'];
 
+=======
+                
+                if ($subDeptAssignment) {
+                    $formRequest->assigned_sub_department = $subDeptAssignment['sub_department'];
+                    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     \Log::info('PFMO Workflow: Auto-assigned to sub-department', [
                         'form_id' => $formRequest->form_id,
                         'sub_department' => $subDeptAssignment['name'],
@@ -995,13 +1094,21 @@ class ApprovalController extends Controller
                     ]);
                 }
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Assign to PFMO staff for feedback
             $pfmoStaff = User::where('department_id', $targetDepartment->department_id)
                 ->where('position', 'Staff')
                 ->where('accessRole', 'Approver')
                 ->first();
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if ($pfmoStaff) {
                 $formRequest->current_approver_id = $pfmoStaff->accnt_id;
                 \Log::info('PFMO Workflow: Assigned to PFMO staff for sub-department evaluation', [
@@ -1017,9 +1124,15 @@ class ApprovalController extends Controller
                     'head_id' => $user->accnt_id
                 ]);
             }
+<<<<<<< HEAD
 
             $formRequest->save();
 
+=======
+            
+            $formRequest->save();
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Create a simple activity record (not an approval)
             \App\Models\FormApproval::create([
                 'form_id' => $formRequest->form_id,
@@ -1030,6 +1143,7 @@ class ApprovalController extends Controller
                 'signature_style_id' => null, // No signature for evaluation
                 'signature_image_path' => null
             ]);
+<<<<<<< HEAD
 
             DB::commit();
 
@@ -1039,6 +1153,17 @@ class ApprovalController extends Controller
             return redirect()->route('approvals.index')
                 ->with('success', 'Request has been sent for sub-department evaluation.');
 
+=======
+            
+            DB::commit();
+            
+            // Clear approval count caches
+            ApprovalCacheService::clearAllApprovalCaches();
+            
+            return redirect()->route('approvals.index')
+                ->with('success', 'Request has been sent for sub-department evaluation.');
+                
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Error in evaluate method:', [
@@ -1058,6 +1183,7 @@ class ApprovalController extends Controller
         $isPFMORequest = $targetDepartment && $targetDepartment->dept_code === 'PFMO';
         $isPFMOUser = $user->department && $user->department->dept_code === 'PFMO';
         $isValidRole = in_array($user->accessRole, ['Approver', 'Viewer']);
+<<<<<<< HEAD
 
         if (!$isPFMORequest || !$isPFMOUser || !$isValidRole || $user->position !== 'Staff') {
             abort(403, 'Send Feedback action is only available for PFMO sub-department staff.');
@@ -1122,12 +1248,43 @@ class ApprovalController extends Controller
             // Change status to awaiting PFMO decision
             $formRequest->status = 'Awaiting PFMO Decision';
 
+=======
+        
+        if (!$isPFMORequest || !$isPFMOUser || !$isValidRole || $user->position !== 'Staff') {
+            abort(403, 'Send Feedback action is only available for PFMO sub-department staff.');
+        }
+        
+        // Feedback requires comments
+        $request->validate([
+            'comments' => 'required|string|min:10',
+        ], [
+            'comments.required' => 'Feedback comments are required.',
+            'comments.min' => 'Feedback must be at least 10 characters long.'
+        ]);
+        
+        $user = Auth::user();
+        
+        try {
+            DB::beginTransaction();
+            
+            if ($formRequest->status !== 'Under Sub-Department Evaluation') {
+                throw new \Exception('Request cannot receive feedback in its current status.');
+            }
+            
+            // Change status to awaiting PFMO decision
+            $formRequest->status = 'Awaiting PFMO Decision';
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Route back to PFMO Head for final decision
             $pfmoHead = User::where('department_id', $targetDepartment->department_id)
                 ->where('position', 'Head')
                 ->where('accessRole', 'Approver')
                 ->first();
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if ($pfmoHead) {
                 $formRequest->current_approver_id = $pfmoHead->accnt_id;
                 \Log::info('PFMO Workflow: Feedback sent, routed to PFMO Head for final decision', [
@@ -1135,9 +1292,15 @@ class ApprovalController extends Controller
                     'pfmo_head_id' => $pfmoHead->accnt_id
                 ]);
             }
+<<<<<<< HEAD
 
             $formRequest->save();
 
+=======
+            
+            $formRequest->save();
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             // Create a feedback record (not an approval)
             \App\Models\FormApproval::create([
                 'form_id' => $formRequest->form_id,
@@ -1148,6 +1311,7 @@ class ApprovalController extends Controller
                 'signature_style_id' => null, // No signature for feedback
                 'signature_image_path' => null
             ]);
+<<<<<<< HEAD
 
             DB::commit();
 
@@ -1157,6 +1321,17 @@ class ApprovalController extends Controller
             return redirect()->route('approvals.index')
                 ->with('success', 'Feedback has been sent to PFMO Head for final decision.');
 
+=======
+            
+            DB::commit();
+            
+            // Clear approval count caches
+            ApprovalCacheService::clearAllApprovalCaches();
+            
+            return redirect()->route('approvals.index')
+                ->with('success', 'Feedback has been sent to PFMO Head for final decision.');
+                
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Error in sendFeedback method:', [
@@ -1168,6 +1343,7 @@ class ApprovalController extends Controller
         }
     }
 
+<<<<<<< HEAD
     public function reject(Request $request, FormRequest $formRequest)
     {
         $this->authorize('approve-requests');
@@ -1181,6 +1357,12 @@ class ApprovalController extends Controller
             'request_data' => $request->all()
         ]);
 
+=======
+    public function reject(Request $request, FormRequest $formRequest): RedirectResponse
+    {
+        $this->authorize('approve-requests');
+
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         try {
             // Check if signature styles exist, otherwise run the seeder
             $stylesCount = \App\Models\SignatureStyle::count();
@@ -1221,6 +1403,7 @@ class ApprovalController extends Controller
                 'form_id' => $formRequest->form_id,
                 'user_id' => auth()->id()
             ]);
+<<<<<<< HEAD
 
             // Handle AJAX requests for validation errors
             if ($request->ajax() || $request->wantsJson()) {
@@ -1235,6 +1418,8 @@ class ApprovalController extends Controller
                 ], 422);
             }
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             \Log::error('Error in reject method:', [
@@ -1242,6 +1427,7 @@ class ApprovalController extends Controller
                 'trace' => $e->getTraceAsString(),
                 'form_id' => $formRequest->form_id
             ]);
+<<<<<<< HEAD
 
             // Handle AJAX requests for general errors
             if ($request->ajax() || $request->wantsJson()) {
@@ -1251,11 +1437,17 @@ class ApprovalController extends Controller
                 ], 500);
             }
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             return back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }
 
+<<<<<<< HEAD
     private function processApprovalAction(Request $request, FormRequest $formRequest, string $action)
+=======
+    private function processApprovalAction(Request $request, FormRequest $formRequest, string $action): RedirectResponse
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     {
         $user = Auth::user();
 
@@ -1279,10 +1471,19 @@ class ApprovalController extends Controller
             // PFMO Head final decision logic
             $targetDepartment = \App\Models\Department::find($formRequest->to_department_id);
             $isPFMORequest = $targetDepartment && $targetDepartment->dept_code === 'PFMO';
+<<<<<<< HEAD
             if ($isPFMORequest && $user->department && $user->department->dept_code === 'PFMO' && $user->position === 'Head' && in_array($formRequest->status, ['In Progress', 'Awaiting PFMO Decision'])) {
                 // Create approval record
                 $signatureStyleId = $request->signatureStyle; // This should be the database ID (1,2,3,4)
 
+=======
+            if ($isPFMORequest && $user->department && $user->department->dept_code === 'PFMO' && $user->position === 'Head' && $formRequest->status === 'Awaiting PFMO Decision') {
+                // Create approval record
+                $styleId = $request->signatureStyle;
+                if ($styleId && !\App\Models\SignatureStyle::find($styleId)) {
+                    $styleId = null;
+                }
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 \App\Models\FormApproval::create([
                     'form_id' => $formRequest->form_id,
                     'approver_id' => $user->accnt_id,
@@ -1291,14 +1492,19 @@ class ApprovalController extends Controller
                     'comments' => $request->comments,
                     'signature_name' => $request->name ?? $user->employeeInfo->FirstName . ' ' . $user->employeeInfo->LastName,
                     'signature_data' => $request->signature,
+<<<<<<< HEAD
                     'signature_style_choice' => $signatureStyleId, // Store the database ID
                     'signature_style_id' => $signatureStyleId // Also store in the foreign key field
+=======
+                    'signature_style_id' => $styleId
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 ]);
                 // Update request status
                 $formRequest->status = 'Approved';
                 $formRequest->current_approver_id = null;
                 $formRequest->date_approved = now();
                 $formRequest->save();
+<<<<<<< HEAD
 
                 // Auto-create job order if this request needs manual work
                 if (JobOrderService::needsJobOrder($formRequest)) {
@@ -1329,10 +1535,16 @@ class ApprovalController extends Controller
                     ]);
                 }
 
+=======
+                // Clear approval caches
+                \App\Services\ApprovalCacheService::clearAllApprovalCaches();
+                DB::commit();
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 return redirect()->route('approvals.index')
                     ->with('success', "Request has been {$action} successfully.");
             }
 
+<<<<<<< HEAD
             // Standard approval logic for non-PFMO requests
             $signatureStyleId = $request->signatureStyle; // This should be the database ID (1,2,3,4)
 
@@ -1395,6 +1607,10 @@ class ApprovalController extends Controller
                 ]);
             }
 
+=======
+            // ...other approval logic for non-PFMO requests (preserved)...
+            // If not PFMO Head final decision, fallback to original logic
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             return redirect()->route('approvals.index')
                 ->with('success', "Request has been {$action} successfully.");
         } catch (\Exception $e) {
@@ -1404,6 +1620,7 @@ class ApprovalController extends Controller
                 'trace' => $e->getTraceAsString(),
                 'form_id' => $formRequest->form_id
             ]);
+<<<<<<< HEAD
 
             // Handle AJAX requests for errors
             if ($request->ajax() || $request->wantsJson()) {
@@ -1413,6 +1630,8 @@ class ApprovalController extends Controller
                 ], 500);
             }
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             return back()->with('error', $e->getMessage());
         }
     }
@@ -1487,7 +1706,11 @@ class ApprovalController extends Controller
                                     $approvalQ->where('action', 'Approved');
                                 });
                         });
+<<<<<<< HEAD
 
+=======
+                        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         // PFMO Head should see "Under Sub-Department Evaluation" and "Awaiting PFMO Decision" requests
                         if ($user->department && $user->department->dept_code === 'PFMO') {
                             $headQuery->orWhere(function ($pfmoHeadQuery) use ($user) {
@@ -1519,7 +1742,11 @@ class ApprovalController extends Controller
                                     });
                                 }
                             });
+<<<<<<< HEAD
 
+=======
+                            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             // Show requests assigned to their department only after being approved by source department head
                             $staffQuery->orWhere(function ($toDept) use ($user) {
                                 $toDept->where('to_department_id', $user->department_id)
@@ -1529,7 +1756,11 @@ class ApprovalController extends Controller
                                         $approvalQ->where('action', 'Approved');
                                     });
                             });
+<<<<<<< HEAD
 
+=======
+                            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             // Show ALL "Under Sub-Department Evaluation" requests to PFMO staff (for visibility)
                             if ($user->department && $user->department->dept_code === 'PFMO') {
                                 $staffQuery->orWhere(function ($pfmoSubQuery) use ($user) {

@@ -84,16 +84,23 @@
 @endpush
 
 @section('content')
+<<<<<<< HEAD
 <!-- BASIC DASHBOARD VIEW MARKER -->
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 <div class="container mx-auto px-4 py-8">
     <!-- Enhanced PFMO Dashboard Header -->
     <div class="pfmo-dashboard">
         <div class="flex justify-between items-center">
             <div>
+<<<<<<< HEAD
                                 <h1 class="display-5 fw-bold text-dark mb-2">
                     <i class="fas fa-tachometer-alt text-primary me-3"></i>
                     PFMO Professional Dashboard ✅
                 </h1>
+=======
+                <h1 class="text-3xl font-bold mb-2">PFMO Enhanced Workflow Dashboard</h1>
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 <p class="text-lg opacity-90">Physical Facilities Management Office - Streamlined Process Management</p>
             </div>
             <div class="text-right">
@@ -126,6 +133,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Star Feedback and Recent Activity -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <!-- Average Star Feedback -->
@@ -172,6 +180,42 @@
                     <div class="text-2xl font-bold text-green-600">{{ $feedbackData['statistics']['completion_rate'] ?? 0 }}%</div>
                     <div class="text-sm text-gray-600">Response Rate</div>
                 </div>
+=======
+    <!-- Enhanced Workflow Stages -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Workflow Process Overview -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Enhanced PFMO Workflow Process</h2>
+            
+            <div class="workflow-stage">
+                <h3 class="font-semibold text-blue-700">1. Initial Request Submission</h3>
+                <p class="text-sm text-gray-600 mt-1">Employee submits IOM with auto-department detection</p>
+            </div>
+            
+            <div class="workflow-stage">
+                <h3 class="font-semibold text-blue-700">2. Department Head Review</h3>
+                <p class="text-sm text-gray-600 mt-1">CCS Dept Head reviews and forwards to PFMO</p>
+            </div>
+            
+            <div class="workflow-stage">
+                <h3 class="font-semibold text-blue-700">3. PFMO Head Initial Approval</h3>
+                <p class="text-sm text-gray-600 mt-1">PFMO Head evaluates request and assigns to sub-department</p>
+            </div>
+            
+            <div class="workflow-stage evaluation">
+                <h3 class="font-semibold text-yellow-700">4. Sub-Department Evaluation</h3>
+                <p class="text-sm text-gray-600 mt-1">Specialized team provides technical assessment and feedback</p>
+            </div>
+            
+            <div class="workflow-stage decision">
+                <h3 class="font-semibold text-green-700">5. PFMO Head Final Decision</h3>
+                <p class="text-sm text-gray-600 mt-1">Final approval based on sub-department recommendation</p>
+            </div>
+            
+            <div class="workflow-stage completed">
+                <h3 class="font-semibold text-purple-700">6. Auto Job Order Creation</h3>
+                <p class="text-sm text-gray-600 mt-1">Automatic job order generation upon approval</p>
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             </div>
         </div>
 
@@ -265,6 +309,7 @@
     </div>
     @endif
 
+<<<<<<< HEAD
     <!-- Feedback Overview Section -->
     @if(isset($feedbackData))
     <div class="mb-8">
@@ -459,6 +504,8 @@
     </div>
     @endif
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     <!-- Recommendations -->
     @if($recommendations && count($recommendations) > 0)
     <div class="bg-white rounded-lg shadow-lg p-6">
@@ -508,15 +555,22 @@
             View All Requests
         </a>
         
+<<<<<<< HEAD
         <a href="{{ route('pfmo.manage-employees') }}" 
            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             <i class="fas fa-users me-2"></i>Manage Employees
+=======
+        <a href="{{ route('pfmo.metrics') }}" 
+           class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+            Performance Reports
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         </a>
         
         <a href="{{ route('approvals.index') }}" 
            class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Approval Queue
         </a>
+<<<<<<< HEAD
 
         @if(Auth::user()->position === 'Head')
         <a href="{{ route('pfmo.supervisors') }}" 
@@ -524,6 +578,8 @@
             Manage Supervisors
         </a>
         @endif
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     </div>
 </div>
 @endsection

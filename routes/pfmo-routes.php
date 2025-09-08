@@ -6,11 +6,15 @@
  */
 
 use App\Http\Controllers\PFMOController;
+<<<<<<< HEAD
 use App\Http\Controllers\SupervisorAssignmentController;
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 use Illuminate\Support\Facades\Route;
 
 // PFMO Dashboard and Management Routes
 Route::middleware(['auth'])->prefix('pfmo')->name('pfmo.')->group(function () {
+<<<<<<< HEAD
 
     // PFMO Dashboard
     Route::get('/dashboard', [\App\Http\Controllers\PFMOController::class, 'dashboard'])
@@ -50,25 +54,51 @@ Route::middleware(['auth'])->prefix('pfmo')->name('pfmo.')->group(function () {
         ->name('facility-requests')
         ->middleware('can:access-pfmo');
 
+=======
+    
+    // PFMO Dashboard
+    Route::get('/dashboard', [PFMOController::class, 'dashboard'])
+        ->name('dashboard')
+        ->middleware('can:access-pfmo');
+    
+    // Facility Requests Management
+    Route::get('/facility-requests', [PFMOController::class, 'facilityRequests'])
+        ->name('facility-requests')
+        ->middleware('can:access-pfmo');
+    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     // Individual Request Details
     Route::get('/request/{id}', [PFMOController::class, 'showRequest'])
         ->name('request.show')
         ->middleware('can:access-pfmo');
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     // Process Approval/Denial
     Route::post('/request/{id}/process', [PFMOController::class, 'processApproval'])
         ->name('request.process')
         ->middleware('can:approve-pfmo-requests');
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     // Bulk Actions
     Route::post('/bulk-action', [PFMOController::class, 'bulkAction'])
         ->name('bulk-action')
         ->middleware('can:approve-pfmo-requests');
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     // Performance Metrics
     Route::get('/metrics', [PFMOController::class, 'metrics'])
         ->name('metrics')
         ->middleware('can:access-pfmo');
+<<<<<<< HEAD
 
     // Supervisor Management (PFMO Head only)
     Route::get('/supervisors', [SupervisorAssignmentController::class, 'index'])
@@ -88,10 +118,14 @@ Route::middleware(['auth'])->prefix('pfmo')->name('pfmo.')->group(function () {
         ->name('supervisors.available')
         ->middleware('can:access-pfmo');
 
+=======
+    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 });
 
 // PFMO API Routes for AJAX calls
 Route::middleware(['auth', 'api'])->prefix('api/pfmo')->name('api.pfmo.')->group(function () {
+<<<<<<< HEAD
 
     // Get dashboard data
     Route::get('/dashboard-data', function () {
@@ -105,17 +139,43 @@ Route::middleware(['auth', 'api'])->prefix('api/pfmo')->name('api.pfmo.')->group
 
     // Auto-categorize request
     Route::post('/categorize-request', function (\Illuminate\Http\Request $request) {
+=======
+    
+    // Get dashboard data
+    Route::get('/dashboard-data', function() {
+        return response()->json(\App\Services\PFMOWorkflowService::getPFMODashboard());
+    })->name('dashboard.data')->middleware('can:access-pfmo');
+    
+    // Get recommendations
+    Route::get('/recommendations', function() {
+        return response()->json(\App\Services\PFMOWorkflowService::getPFMORecommendations());
+    })->name('recommendations')->middleware('can:access-pfmo');
+    
+    // Auto-categorize request
+    Route::post('/categorize-request', function(\Illuminate\Http\Request $request) {
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         $request->validate([
             'description' => 'required|string',
             'title' => 'nullable|string'
         ]);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         $suggestions = \App\Services\PFMOWorkflowService::categorizePFMORequest(
             $request->description,
             $request->title ?? ''
         );
+<<<<<<< HEAD
 
         return response()->json(['suggestions' => $suggestions]);
     })->name('categorize')->middleware('can:access-pfmo');
 
+=======
+        
+        return response()->json(['suggestions' => $suggestions]);
+    })->name('categorize')->middleware('can:access-pfmo');
+    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 });

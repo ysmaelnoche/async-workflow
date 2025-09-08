@@ -108,8 +108,12 @@ class RequestTypeService
                 'construction', 'renovation', 'building', 'concrete', 'cement',
                 'structural', 'foundation', 'roof', 'ceiling', 'wall',
                 'floor', 'paint', 'painting', 'tiles', 'carpentry',
+<<<<<<< HEAD
                 'welding', 'steel', 'framework', 'building maintenance',
                 'infrastructure', 'demolition', 'installation', 'assembly'
+=======
+                'welding', 'steel', 'framework'
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             ]
         ],
         

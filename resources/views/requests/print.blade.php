@@ -284,6 +284,7 @@
         <!-- Approval Section -->
         <div class="approval-section">
             <div class="approval-grid">
+<<<<<<< HEAD
                                 @foreach($formRequest->approvals->sortBy('action_date') as $approval)
                     @if(in_array($approval->action, ['Approved', 'Rejected']))
                         @if(!empty($approval->signature_data) && (strpos($approval->signature_data, 'data:image/') === 0 || filter_var($approval->signature_data, FILTER_VALIDATE_URL)))
@@ -327,6 +328,25 @@
                                 </div>
                             </div>
                         @endif
+=======
+                @foreach($formRequest->approvals->sortBy('action_date') as $approval)
+                    @if(in_array($approval->action, ['Approved', 'Rejected']) && !empty($approval->signature_data))
+                        <div class="approval-box">
+                            <div class="signature-container">
+                                <img src="{{ $approval->signature_data }}" alt="Digital Signature" class="signature-image">
+                            </div>
+                            <div class="approval-name">
+                                {{ $approval->approver->employeeInfo->FirstName }} {{ $approval->approver->employeeInfo->LastName }}
+                            </div>
+                            <div class="approval-info">
+                                {{ $approval->approver->position }}<br>
+                                {{ $approval->approver->department->dept_name }}
+                            </div>
+                            <div class="approval-status">
+                                {{ $approval->action }}
+                            </div>
+                        </div>
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     @endif
                 @endforeach
             </div>

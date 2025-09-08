@@ -268,9 +268,14 @@ class ApprovalCacheService
             
             return Cache::remember($cacheKey, self::DEFAULT_CACHE_DURATION, function() use ($user) {
                 // Count pending approvals for this user
+<<<<<<< HEAD
                 // Using 'action' column with correct enum values from database
                 return \App\Models\FormApproval::where('approver_id', $user->accnt_id)
                     ->whereIn('action', ['Submitted', 'Evaluate', 'Assigned'])
+=======
+                return \App\Models\FormApproval::where('approver_emp_no', $user->Emp_No)
+                    ->whereIn('approval_status', ['pending', 'evaluate', 'assign'])
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     ->count();
             });
             

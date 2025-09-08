@@ -19,7 +19,11 @@ class PFMOWorkflowService
     const STATUS_AWAITING_PFMO_DECISION = 'Awaiting PFMO Decision';
     const STATUS_APPROVED = 'Approved';
     const STATUS_REJECTED = 'Rejected';
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     /**
      * Get PFMO dashboard data
      * 
@@ -28,14 +32,22 @@ class PFMOWorkflowService
     public static function getPFMODashboard(): array
     {
         $pfmoDepartment = Department::where('dept_code', 'PFMO')->first();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         if (!$pfmoDepartment) {
             return ['error' => 'PFMO department not found'];
         }
 
         $today = now();
         $lastMonth = now()->subMonth();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Basic statistics
         $stats = [
             'total_requests' => FormRequest::where('to_department_id', $pfmoDepartment->department_id)->count(),
@@ -60,7 +72,11 @@ class PFMOWorkflowService
 
         // Category breakdown
         $categoryBreakdown = self::getCategoryBreakdown($pfmoDepartment->department_id);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Performance metrics
         $performanceMetrics = self::getPerformanceMetrics($pfmoDepartment->department_id);
 
@@ -81,19 +97,31 @@ class PFMOWorkflowService
     public static function getPFMORecommendations(): array
     {
         $pfmoDepartment = Department::where('dept_code', 'PFMO')->first();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         if (!$pfmoDepartment) {
             return [];
         }
 
         $recommendations = [];
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Check for overdue requests
         $overdueRequests = FormRequest::where('to_department_id', $pfmoDepartment->department_id)
             ->whereIn('status', ['Pending', 'In Progress'])
             ->where('date_submitted', '<', now()->subDays(7))
             ->count();
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         if ($overdueRequests > 0) {
             $recommendations[] = [
                 'type' => 'urgent',
@@ -106,12 +134,20 @@ class PFMOWorkflowService
 
         // Check for rush requests
         $rushRequests = FormRequest::where('to_department_id', $pfmoDepartment->department_id)
+<<<<<<< HEAD
             ->whereHas('iomDetails', function ($q) {
+=======
+            ->whereHas('iomDetails', function($q) {
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 $q->where('priority', 'Rush');
             })
             ->whereIn('status', ['Pending', 'In Progress'])
             ->count();
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         if ($rushRequests > 0) {
             $recommendations[] = [
                 'type' => 'info',
@@ -148,10 +184,17 @@ class PFMOWorkflowService
     {
         // Use the RequestTypeService for categorization
         $autoAssignment = RequestTypeService::autoAssignDepartment($title, $description);
+<<<<<<< HEAD
 
         if ($autoAssignment && $autoAssignment['department']->dept_code === 'PFMO') {
             $subDepartment = RequestTypeService::getPFMOSubDepartmentAssignment($title, $description);
 
+=======
+        
+        if ($autoAssignment && $autoAssignment['department']->dept_code === 'PFMO') {
+            $subDepartment = RequestTypeService::getPFMOSubDepartmentAssignment($title, $description);
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             return [
                 'category' => $autoAssignment['category'],
                 'confidence' => $autoAssignment['confidence_score'],
@@ -160,7 +203,11 @@ class PFMOWorkflowService
                 'estimated_completion_days' => self::estimateCompletionTime($autoAssignment['category'])
             ];
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return [
             'category' => 'general_maintenance',
             'confidence' => 0,
@@ -182,13 +229,20 @@ class PFMOWorkflowService
     {
         try {
             DB::beginTransaction();
+<<<<<<< HEAD
 
             $result = false;
 
+=======
+            
+            $result = false;
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             switch ($action) {
                 case 'evaluate':
                     $result = self::processEvaluateAction($request, $options);
                     break;
+<<<<<<< HEAD
 
                 case 'assign_sub_department':
                     $result = self::assignToSubDepartment($request, $options);
@@ -213,6 +267,32 @@ class PFMOWorkflowService
             DB::commit();
             return $result;
 
+=======
+                    
+                case 'assign_sub_department':
+                    $result = self::assignToSubDepartment($request, $options);
+                    break;
+                    
+                case 'sub_department_feedback':
+                    $result = self::processSubDepartmentFeedback($request, $options);
+                    break;
+                    
+                case 'final_decision':
+                    $result = self::processFinalDecision($request, $options);
+                    break;
+                    
+                case 'create_job_order':
+                    $result = self::createJobOrder($request, $options);
+                    break;
+                    
+                default:
+                    throw new \InvalidArgumentException("Unknown action: {$action}");
+            }
+            
+            DB::commit();
+            return $result;
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('PFMO Enhanced Workflow Error: ' . $e->getMessage(), [
@@ -230,7 +310,11 @@ class PFMOWorkflowService
     private static function processEvaluateAction(FormRequest $request, array $options): bool
     {
         $user = auth()->user();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Create approval record
         FormApproval::create([
             'form_id' => $request->form_id,
@@ -240,16 +324,28 @@ class PFMOWorkflowService
             'remarks' => $options['remarks'] ?? 'Request approved for evaluation',
             'approval_level' => 'PFMO_HEAD'
         ]);
+<<<<<<< HEAD
 
         // Update request status
         $request->status = self::STATUS_UNDER_EVALUATION;
         $request->save();
 
+=======
+        
+        // Update request status
+        $request->status = self::STATUS_UNDER_EVALUATION;
+        $request->save();
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Auto-assign to appropriate sub-department if specified
         if (isset($options['sub_department'])) {
             return self::assignToSubDepartment($request, $options);
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return true;
     }
 
@@ -258,12 +354,21 @@ class PFMOWorkflowService
      */
     private static function assignToSubDepartment(FormRequest $request, array $options): bool
     {
+<<<<<<< HEAD
         $subDeptInfo = $options['sub_department'] ??
             RequestTypeService::getPFMOSubDepartmentAssignment(
                 $request->title,
                 $request->iomDetails->body ?? ''
             );
 
+=======
+        $subDeptInfo = $options['sub_department'] ?? 
+                      RequestTypeService::getPFMOSubDepartmentAssignment(
+                          $request->title, 
+                          $request->iomDetails->body ?? ''
+                      );
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Create assignment record
         FormApproval::create([
             'form_id' => $request->form_id,
@@ -274,7 +379,11 @@ class PFMOWorkflowService
             'approval_level' => 'SUB_DEPARTMENT_ASSIGNMENT',
             'sub_department' => $subDeptInfo['sub_department'] ?? null
         ]);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return true;
     }
 
@@ -286,6 +395,7 @@ class PFMOWorkflowService
         FormApproval::create([
             'form_id' => $request->form_id,
             'approver_id' => auth()->user()->accnt_id,
+<<<<<<< HEAD
             'action' => 'Send Feedback', // Use valid ENUM value
             'action_date' => now(),
             'remarks' => $options['feedback'] ?? '',
@@ -299,6 +409,21 @@ class PFMOWorkflowService
         $request->status = self::STATUS_AWAITING_PFMO_DECISION;
         $request->save();
 
+=======
+            'action' => 'Feedback',
+            'action_date' => now(),
+            'remarks' => $options['feedback'] ?? '',
+            'approval_level' => 'SUB_DEPARTMENT_FEEDBACK',
+            'estimated_completion_date' => isset($options['estimated_completion']) ? 
+                                         \Carbon\Carbon::parse($options['estimated_completion'])->format('Y-m-d') : null,
+            'estimated_cost' => $options['estimated_cost'] ?? null
+        ]);
+        
+        // Update status to awaiting PFMO decision
+        $request->status = self::STATUS_AWAITING_PFMO_DECISION;
+        $request->save();
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return true;
     }
 
@@ -308,7 +433,11 @@ class PFMOWorkflowService
     private static function processFinalDecision(FormRequest $request, array $options): bool
     {
         $action = $options['decision'] ?? 'Approved';
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         FormApproval::create([
             'form_id' => $request->form_id,
             'approver_id' => auth()->user()->accnt_id,
@@ -317,15 +446,26 @@ class PFMOWorkflowService
             'remarks' => $options['remarks'] ?? '',
             'approval_level' => 'PFMO_FINAL_DECISION'
         ]);
+<<<<<<< HEAD
 
         $request->status = $action;
         $request->save();
 
+=======
+        
+        $request->status = $action;
+        $request->save();
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Auto-create job order if approved
         if ($action === 'Approved' && ($options['create_job_order'] ?? true)) {
             return self::createJobOrder($request, $options);
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return true;
     }
 
@@ -334,6 +474,7 @@ class PFMOWorkflowService
      */
     private static function createJobOrder(FormRequest $request, array $options): bool
     {
+<<<<<<< HEAD
         // Create an actual JobOrder row and add an approval timeline record
         $request->loadMissing(['requester.employeeInfo', 'toDepartment', 'iomDetails']);
 
@@ -361,6 +502,11 @@ class PFMOWorkflowService
             \App\Services\EmailNotificationService::sendJobAssignment($jobOrder);
         }
 
+=======
+        // This would integrate with your job order system
+        // For now, we'll create a record indicating job order creation
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         FormApproval::create([
             'form_id' => $request->form_id,
             'approver_id' => auth()->user()->accnt_id,
@@ -368,6 +514,7 @@ class PFMOWorkflowService
             'action_date' => now(),
             'remarks' => 'Job order automatically created upon approval',
             'approval_level' => 'JOB_ORDER_CREATION',
+<<<<<<< HEAD
             'job_order_number' => $jobOrderNumber
         ]);
 
@@ -520,6 +667,12 @@ class PFMOWorkflowService
             ->avg('requestor_satisfaction_rating');
 
         return $completedJobs ? ($completedJobs / 5.0) : 0.5; // Default to 0.5 if no feedback
+=======
+            'job_order_number' => 'JO-' . now()->format('Ymd') . '-' . str_pad($request->form_id, 4, '0', STR_PAD_LEFT)
+        ]);
+        
+        return true;
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     }
 
     /**
@@ -530,19 +683,33 @@ class PFMOWorkflowService
         $requests = FormRequest::where('to_department_id', $departmentId)
             ->with('iomDetails')
             ->get();
+<<<<<<< HEAD
 
         $categories = [];
 
+=======
+            
+        $categories = [];
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         foreach ($requests as $request) {
             $categorization = self::categorizePFMORequest(
                 $request->iomDetails->body ?? '',
                 $request->title
             );
+<<<<<<< HEAD
 
             $category = $categorization['category'];
             $categories[$category] = ($categories[$category] ?? 0) + 1;
         }
 
+=======
+            
+            $category = $categorization['category'];
+            $categories[$category] = ($categories[$category] ?? 0) + 1;
+        }
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return $categories;
     }
 
@@ -556,6 +723,7 @@ class PFMOWorkflowService
             ->with('approvals')
             ->limit(100)
             ->get();
+<<<<<<< HEAD
 
         $totalTime = 0;
         $count = 0;
@@ -564,13 +732,27 @@ class PFMOWorkflowService
             $firstApproval = $request->approvals->where('action', 'Evaluate')->first();
             $finalApproval = $request->approvals->where('action', 'Approved')->first();
 
+=======
+            
+        $totalTime = 0;
+        $count = 0;
+        
+        foreach ($requests as $request) {
+            $firstApproval = $request->approvals->where('action', 'Evaluate')->first();
+            $finalApproval = $request->approvals->where('action', 'Approved')->first();
+            
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             if ($firstApproval && $finalApproval) {
                 $time = $firstApproval->action_date->diffInHours($finalApproval->action_date);
                 $totalTime += $time;
                 $count++;
             }
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return [
             'average_processing_time_hours' => $count > 0 ? round($totalTime / $count, 1) : 0,
             'total_processed' => $count,
@@ -594,21 +776,35 @@ class PFMOWorkflowService
     {
         $urgentKeywords = ['urgent', 'emergency', 'asap', 'immediate', 'critical', 'broken', 'not working', 'failure'];
         $rushKeywords = ['rush', 'priority', 'soon', 'needed today'];
+<<<<<<< HEAD
 
         $text = strtolower($title . ' ' . $description);
 
+=======
+        
+        $text = strtolower($title . ' ' . $description);
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         foreach ($urgentKeywords as $keyword) {
             if (strpos($text, $keyword) !== false) {
                 return 'Urgent';
             }
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         foreach ($rushKeywords as $keyword) {
             if (strpos($text, $keyword) !== false) {
                 return 'Rush';
             }
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         return 'Routine';
     }
 
@@ -624,6 +820,7 @@ class PFMOWorkflowService
             'aircon_maintenance' => 3,
             'general_maintenance' => 5
         ];
+<<<<<<< HEAD
 
         return $estimates[$category] ?? 3;
     }
@@ -877,4 +1074,9 @@ class PFMOWorkflowService
             'specialist' => 'General Services'
         ];
     }
+=======
+        
+        return $estimates[$category] ?? 3;
+    }
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 }
