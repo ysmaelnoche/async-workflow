@@ -17,11 +17,12 @@ class SupervisorAssignmentController extends Controller
         }
 
         $subDepartments = SubDepartment::with('supervisor')->get();
+        // Load EmployeeInfo entries that have a linked user in PFMO and eager-load the user
         $availableEmployees = EmployeeInfo::whereHas('user', function($query) {
             $query->whereHas('department', function($deptQuery) {
                 $deptQuery->where('dept_code', 'PFMO');
             });
-        })->get();
+        })->with('user')->get();
 
         return view('pfmo.supervisor-assignments', compact('subDepartments', 'availableEmployees'));
     }
@@ -35,13 +36,14 @@ class SupervisorAssignmentController extends Controller
 
         $request->validate([
             'sub_department_id' => 'required|exists:sub_departments,id',
-            'supervisor_id' => 'required|exists:tb_employeeinfo,Emp_No'
+            // supervisor_id must be the tb_account.accnt_id (integer primary key)
+            'supervisor_id' => 'required|exists:tb_account,accnt_id'
         ]);
 
         $subDepartment = SubDepartment::findOrFail($request->sub_department_id);
         
         // Check if employee is already assigned as supervisor elsewhere
-        $existingAssignment = SubDepartment::where('supervisor_id', $request->supervisor_id)
+    $existingAssignment = SubDepartment::where('supervisor_id', $request->supervisor_id)
             ->where('id', '!=', $request->sub_department_id)
             ->first();
 

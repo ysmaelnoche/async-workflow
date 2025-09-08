@@ -90,9 +90,9 @@
                                         class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     <option value="">Select Employee</option>
                                     @foreach($availableEmployees as $employee)
-                                        @if(!$employee->user || $employee->user->department->dept_code === 'PFMO')
-                                            <option value="{{ $employee->Emp_No }}"
-                                                    @if($subDepartment->supervisor_id === $employee->Emp_No) selected @endif>
+                                        @if($employee->user && $employee->user->department && $employee->user->department->dept_code === 'PFMO')
+                                            <option value="{{ $employee->user->accnt_id }}"
+                                                    @if($subDepartment->supervisor_id === $employee->user->accnt_id) selected @endif>
                                                 {{ $employee->FirstName }} {{ $employee->LastName }} ({{ $employee->Emp_No }})
                                             </option>
                                         @endif
