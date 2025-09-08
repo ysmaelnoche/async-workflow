@@ -1,4 +1,4 @@
-﻿<x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Track Request') }} - ID: {{ $formRequest->form_id }}
@@ -61,8 +61,6 @@
                                                     @elseif($approval->action === 'Approved') bg-green-500
                                                     @elseif($approval->action === 'Send Feedback') bg-green-500
                                                     @else bg-blue-500
-                                                    @elseif($approval->action === 'Approved') bg-green-500
-                                                    @else bg-gray-500
                                                     @endif
                                                     rounded-full w-8 h-8 flex items-center justify-center ring-4 ring-white dark:ring-gray-800">
                                                     @if($approval->action === 'Rejected')
@@ -80,9 +78,6 @@
                                                     @else
                                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                    @elseif($approval->action === 'Approved')
-                                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                                         </svg>
                                                     @endif
                                                 </div>
@@ -181,17 +176,6 @@
                                                                     break;
                                                                 default:
                                                                     $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Section';
-                                                                case 'electrical':
-                                                                    $subDeptName = 'PFMO Electrical Department';
-                                                                    break;
-                                                                case 'hvac':
-                                                                    $subDeptName = 'PFMO HVAC Department';
-                                                                    break;
-                                                                case 'general_services':
-                                                                    $subDeptName = 'PFMO General Services';
-                                                                    break;
-                                                                default:
-                                                                    $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Department';
                                                             }
                                                         }
                                                     @endphp
@@ -460,7 +444,6 @@
                         </div>
 
                         {{-- Signatures Section - Only show final approvals/rejections visible to requestor --}}
-                        {{-- Signatures Section --}}
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold mb-4">Signatures</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -468,9 +451,6 @@
                                     @if(in_array($approval->action, ['Approved', 'Rejected', 'Send Feedback']) && ($approval->signature_data || $approval->signature_name))
                                         <div class="signature-card bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
                                             @if($approval->signature_data && (strpos($approval->signature_data, 'data:image/') === 0 || filter_var($approval->signature_data, FILTER_VALIDATE_URL)))
-                                    @if($approval->action !== 'Submitted')
-                                        <div class="signature-card bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
-                                            @if($approval->signature_data)
                                                 <div class="signature-image-container h-24 flex items-center justify-center border-b border-gray-100 dark:border-gray-700 px-6 py-2">
                                                     <img src="{{ $approval->signature_data }}"
                                                          alt="Digital Signature"
@@ -559,7 +539,6 @@
                                     @if($approval->action !== 'Submitted')
                                     <div class="border rounded-lg p-4 flex flex-col items-center justify-center">
                                         @if($approval->signature_data && (strpos($approval->signature_data, 'data:image/') === 0 || filter_var($approval->signature_data, FILTER_VALIDATE_URL)))
-                                        @if($approval->signature_data)
                                             <div class="signature-image-container h-24 flex items-center justify-center border-b border-gray-100 dark:border-gray-700">
                                                 <img src="{{ $approval->signature_data }}" alt="Digital Signature" class="max-h-20 object-contain">
                                             </div>
@@ -791,7 +770,7 @@
                                     <label class="flex flex-col items-center">
                                         <input type="radio" name="satisfaction_rating" value="{{ $i }}" required class="sr-only">
                                         <div class="star-rating cursor-pointer text-3xl text-gray-300 hover:text-yellow-400 transition-colors" onclick="setRating({{ $i }})">
-                                            â­
+                                            ⭐
                                         </div>
                                         <span class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $i }}</span>
                                     </label>
@@ -1133,8 +1112,6 @@ window.onclick = function(event) {
     }
 }
 </script>
-
-</x-app-layout>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Mr+Dafoe&family=Homemade+Apple&family=Pacifico&family=Dancing+Script&display=swap');

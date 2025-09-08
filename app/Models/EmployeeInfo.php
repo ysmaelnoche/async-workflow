@@ -1,4 +1,4 @@
-hp
+<?php
 
 namespace App\Models;
 
@@ -24,21 +24,6 @@ class EmployeeInfo extends Model
         'Suffix',
         'Email',
     ];
-
-    /**
-     * Get the employee's full name.
-     */
-    public function getFullNameAttribute(): string
-    {
-        $parts = array_filter([
-            $this->Titles,
-            $this->FirstName,
-            $this->MiddleName,
-            $this->LastName,
-            $this->Suffix
-        ]);
-        return implode(' ', $parts);
-    }
 
     public function user(): HasOne
     {

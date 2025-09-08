@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace App\Services;
 
@@ -106,11 +106,10 @@ class RequestTypeService
             'code' => 'PFMO-CONS',
             'keywords' => [
                 'construction', 'renovation', 'building', 'concrete', 'cement',
-                'structural', 'foundation', 'roof', 'ceiling', 'wall',
+                                'structural', 'foundation', 'roof', 'ceiling', 'wall',
                 'floor', 'paint', 'painting', 'tiles', 'carpentry',
                 'welding', 'steel', 'framework', 'building maintenance',
                 'infrastructure', 'demolition', 'installation', 'assembly'
-                'welding', 'steel', 'framework'
             ]
         ],
         

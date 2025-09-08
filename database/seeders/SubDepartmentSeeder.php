@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -37,11 +37,6 @@ class SubDepartmentSeeder extends Seeder
                 'subdepartment_code' => 'PFMO-GENERAL',
                 'name' => 'General Services',
                 'description' => 'Manages general maintenance and services. Head: ROS BALTAZAR. Handles: Plumber, Traffic, Monitoring & Inspection Team.',
-        DB::table('sub_departments')->insert([
-            [
-                'subdepartment_code' => 'PFMO-CONS',
-                'name' => 'Construction',
-                'description' => 'Responsible for all fabrication, building, and structural maintenance tasks.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -49,7 +44,6 @@ class SubDepartmentSeeder extends Seeder
                 'subdepartment_code' => 'PFMO-HOUSEKEEPING',
                 'name' => 'Housekeeping',
                 'description' => 'Responsible for cleanliness and facility maintenance. Head: VIRGILIO VITERBO. Handles: Housekeepers, Mechanics, Ground Maintenance.',
-                'description' => 'Manages cleanliness, sanitation, and general upkeep of facilities.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -57,9 +51,6 @@ class SubDepartmentSeeder extends Seeder
                 'subdepartment_code' => 'PFMO-TRANSPORTATION',
                 'name' => 'Transportation Section',
                 'description' => 'Manages vehicle operations and transportation services. Head: MICHAEL DELA CRUZ. Handles: Head Driver, Drivers.',
-                'subdepartment_code' => 'PFMO-GEN',
-                'name' => 'General Services',
-                'description' => 'Handles repairs and maintenance of equipment, furniture, and utilities.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -1,4 +1,4 @@
-﻿@props([
+@props([
     'title' => 'Alert',
     'type' => 'info', // info, error, warning, success
     'confirmText' => 'OK',
@@ -27,11 +27,6 @@ $buttonClasses = [
     'error' => 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 focus:ring-red-500',
     'warning' => 'bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 focus:ring-yellow-500',
     'success' => 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 focus:ring-green-500',
-$buttonClasses = [
-    'info' => 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
-    'error' => 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
-    'warning' => 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500',
-    'success' => 'bg-green-600 hover:bg-green-700 focus:ring-green-500',
 ];
 
 $icons = [
@@ -68,23 +63,6 @@ $icons = [
                     </h3>
                     <div class="mt-2">
                         <div class="text-sm text-gray-600 leading-relaxed">
-        <!-- Background overlay -->
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeModalAlert('{{ $id }}')"></div>
-
-        <!-- Modal panel -->
-        <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-            <div class="sm:flex sm:items-start">
-                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-{{ $type === 'error' ? 'red' : ($type === 'warning' ? 'yellow' : ($type === 'success' ? 'green' : 'blue')) }}-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <svg class="h-6 w-6 {{ $typeClasses[$type] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icons[$type] }}"></path>
-                    </svg>
-                </div>
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-1">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                        {{ $title }}
-                    </h3>
-                    <div class="mt-2">
-                        <div class="text-sm text-gray-500">
                             {{ $slot }}
                         </div>
                     </div>
@@ -104,12 +82,6 @@ $icons = [
                     <button type="button" 
                             onclick="closeModalAlert('{{ $id }}')" 
                             class="mt-3 w-full inline-flex justify-center items-center rounded-xl border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm transform hover:scale-105 transition-all duration-200">
-            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                <button type="button" onclick="closeModalAlert('{{ $id }}')" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 {{ $buttonClasses[$type] }} text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">
-                    {{ $confirmText }}
-                </button>
-                @if($showCancel)
-                    <button type="button" onclick="closeModalAlert('{{ $id }}')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
                         {{ $cancelText }}
                     </button>
                 @endif
@@ -216,41 +188,6 @@ window.styledAlert = function(message, title = 'Alert', type = 'info') {
                         <button type="button" onclick="closeModalAlert('${id}')" class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-lg px-6 py-3 bg-gradient-to-r from-${config.color}-600 to-${config.color}-600 hover:from-${config.color}-700 hover:to-${config.color}-700 text-base font-semibold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${config.color}-500 sm:ml-3 sm:w-auto sm:text-sm transform hover:scale-105 transition-all duration-200 relative overflow-hidden group">
                             <span class="relative z-10">OK</span>
                             <div class="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-<script>
-function showModalAlert(id) {
-    document.getElementById(id).classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
-}
-
-function closeModalAlert(id) {
-    document.getElementById(id).classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
-}
-
-// Enhanced alert function to replace browser alert
-window.styledAlert = function(message, title = 'Alert', type = 'info') {
-    const id = 'dynamic-alert-' + Date.now();
-    const alertHtml = `
-        <div id="${id}" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeModalAlert('${id}')"></div>
-                <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-1">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">${title}</h3>
-                            <div class="mt-2">
-                                <div class="text-sm text-gray-500">${message}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                        <button type="button" onclick="closeModalAlert('${id}')" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                            OK
                         </button>
                     </div>
                 </div>
@@ -280,7 +217,4 @@ window.styledAlert = function(message, title = 'Alert', type = 'info') {
     }
 };
 </script>
-</script>
-    }, 1000);
-};
 </script>

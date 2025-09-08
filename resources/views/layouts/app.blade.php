@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -81,8 +81,6 @@
 
             @if (session('error') && !request()->ajax())
                 <x-simple-error-toast :message="session('error')" />
-            @if (session('error'))
-                <x-toast-notification type="error" :message="session('error')" />
             @endif
 
             @if (session('info'))
@@ -100,7 +98,6 @@
                 @else
                     @yield('content')
                 @endisset
-                {{ $slot }}
             </main>
         </div>
 

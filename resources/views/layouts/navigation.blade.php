@@ -1,4 +1,4 @@
-﻿<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -44,9 +44,6 @@
                         @if(Auth::user()->department && Auth::user()->department->dept_code === 'PFMO')
                             <x-nav-link :href="route('job-orders.index')" :active="request()->routeIs('job-orders.index') || request()->routeIs('job-orders.show')">
                                 {{ __('Job Orders') }}
-                        @if((Auth::user()->position === 'Head' || Auth::user()->position === 'VPAA') && Auth::user()->accessRole === 'Approver')
-                            <x-nav-link :href="route('approver-assignments.index')" :active="request()->routeIs('approver-assignments.index')">
-                                {{ __('Manage Approvers') }}
                             </x-nav-link>
                         @endif
                     @endif
@@ -161,13 +158,6 @@
 
                 {{-- Job Order Feedback Link (for all users) --}}
             @endif
-                 @if((Auth::user()->position === 'Head' || Auth::user()->position === 'VPAA') && Auth::user()->accessRole === 'Approver')
-                    <x-responsive-nav-link :href="route('approver-assignments.index')" :active="request()->routeIs('approver-assignments.index')">
-                        {{ __('Manage Approvers') }}
-                    </x-responsive-nav-link>
-                @endif
-            @endif
-
             {{-- Admin Responsive Links --}}
             @if(Auth::user()->accessRole === 'Admin')
                 <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
