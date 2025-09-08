@@ -5,24 +5,24 @@
 @push('styles')
 <style>
     .pfmo-dashboard {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
-        color: white;
-        padding: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .stats-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 10px;
+        background: #ffffff; /* plain white card */
+        border-radius: 12px;
+        color: #212529;
         padding: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: transform 0.3s ease;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e9ecef;
     }
-    
+
+    .stats-card {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 1.25rem;
+        border: 1px solid #e9ecef;
+        transition: transform 0.12s ease;
+    }
+
     .stats-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-3px);
     }
     
     .workflow-stage {
@@ -46,12 +46,12 @@
     }
     
     .sub-dept-card {
-        background: white;
+        background: #ffffff;
         border-radius: 8px;
         padding: 1rem;
         margin-bottom: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        border-left: 4px solid #17a2b8;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        border-left: 4px solid #0d6efd; /* primary blue accent */
     }
     
     .priority-urgent {
@@ -91,9 +91,10 @@
         <div class="flex justify-between items-center">
             <div>
                                 <h1 class="display-5 fw-bold text-dark mb-2">
-                    <i class="fas fa-tachometer-alt text-primary me-3"></i>
-                    PFMO Professional Dashboard ✅
-                </h1>
+                                    <i class="fas fa-tachometer-alt text-primary me-3"></i>
+                                    PFMO Professional Dashboard
+                                </h1>
+                                <p class="small text-muted mb-0">Physical Facilities Management Office - Streamlined Process Management</p>
                 <p class="text-lg opacity-90">Physical Facilities Management Office - Streamlined Process Management</p>
             </div>
             <div class="text-right">
