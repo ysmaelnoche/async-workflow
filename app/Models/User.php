@@ -9,7 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\SignatureStyle; // Add this line
+use App\Models\SignatureStyle;
+use App\Models\EmployeeInfo;
+use App\Models\Department;
+use App\Models\ApproverPermission;
+use App\Models\SubDepartment;
+use App\Models\JobOrder;
 
 class User extends Authenticatable
 {
