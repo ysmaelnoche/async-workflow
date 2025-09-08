@@ -94,8 +94,8 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover" id="employeesTable">
+                    <div class="table-responsive" style="max-height:60vh; overflow:auto;">
+                        <table class="table table-striped table-hover" id="employeesTable" style="margin-bottom:0;">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Employee</th>
@@ -239,96 +239,18 @@
     </div>
 </div>
 
-<!-- Assign Employee Modal -->
-<div class="modal fade" id="assignEmployeeModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Assign Employee to Sub-Department</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="assignEmployeeForm">
-                    <input type="hidden" id="assignEmployeeId" name="employee_id">
-                    
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Employee:</label>
-                        <div id="assignEmployeeName" class="form-control-plaintext border rounded p-2 bg-light"></div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="assignSubDepartmentId" class="form-label fw-bold">Sub-Department:</label>
-                        <select class="form-select" id="assignSubDepartmentId" name="sub_department_id" required>
-                            <option value="">Select Sub-Department</option>
-                            @foreach($subDepartments as $subDept)
-                            <option value="{{ $subDept['id'] }}">{{ $subDept['name'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="assignEmployee()">
-                    <i class="fas fa-check me-1"></i>Assign
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Assign Supervisor Modal -->
-<div class="modal fade" id="assignSupervisorModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Assign Supervisor to Sub-Department</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="assignSupervisorForm">
-                    <input type="hidden" id="supervisorSubDepartmentId" name="sub_department_id">
-                    <input type="hidden" id="isReassignment" name="reassign" value="false">
-                    
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Sub-Department:</label>
-                        <div id="supervisorSubDepartmentName" class="form-control-plaintext border rounded p-2 bg-light"></div>
-                    </div>
-
-                    <div id="currentSupervisorInfo" class="mb-3" style="display: none;">
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            <strong>Current Supervisor:</strong> <span id="currentSupervisorName"></span><br>
-                            <small>This will replace the current supervisor.</small>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="supervisorEmployeeId" class="form-label fw-bold">New Supervisor:</label>
-                        <select class="form-select" id="supervisorEmployeeId" name="employee_id" required>
-                            <option value="">Select Employee</option>
-                            @foreach($employees as $employee)
-                            <option value="{{ $employee['id'] }}">{{ $employee['name'] }} ({{ $employee['position'] }})</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="assignSupervisor()">
-                    <i class="fas fa-user-tie me-1"></i><span id="supervisorActionText">Assign</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Move modals to end of document to avoid being inside scrollable containers -->
 
 @endsection
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+// Improve toast z-index so toasts appear above other UI
+const style = document.createElement('style');
+style.innerHTML = `.toast-container { z-index: 2000 !important; } .modal { z-index: 2050; }`;
+document.head.appendChild(style);
+
 // Global variables
 let assignEmployeeModal, assignSupervisorModal;
 
@@ -584,3 +506,93 @@ function hideLoadingButton() {
 }
 </script>
 @endpush
+
+<!-- Modals placed at the end of document body to prevent scroll issues -->
+<!-- Assign Employee Modal -->
+<div class="modal fade" id="assignEmployeeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Assign Employee to Sub-Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="assignEmployeeForm">
+                    <input type="hidden" id="assignEmployeeId" name="employee_id">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Employee:</label>
+                        <div id="assignEmployeeName" class="form-control-plaintext border rounded p-2 bg-light"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="assignSubDepartmentId" class="form-label fw-bold">Sub-Department:</label>
+                        <select class="form-select" id="assignSubDepartmentId" name="sub_department_id" required>
+                            <option value="">Select Sub-Department</option>
+                            @foreach($subDepartments as $subDept)
+                            <option value="{{ $subDept['id'] }}">{{ $subDept['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="assignEmployee()">
+                    <i class="fas fa-check me-1"></i>Assign
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assign Supervisor Modal -->
+<div class="modal fade" id="assignSupervisorModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Assign Supervisor to Sub-Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="assignSupervisorForm">
+                    <input type="hidden" id="supervisorSubDepartmentId" name="sub_department_id">
+                    <input type="hidden" id="isReassignment" name="reassign" value="false">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Sub-Department:</label>
+                        <div id="supervisorSubDepartmentName" class="form-control-plaintext border rounded p-2 bg-light"></div>
+                    </div>
+
+                    <div id="currentSupervisorInfo" class="mb-3" style="display: none;">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Current Supervisor:</strong> <span id="currentSupervisorName"></span><br>
+                            <small>This will replace the current supervisor.</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="supervisorEmployeeId" class="form-label fw-bold">New Supervisor:</label>
+                        <select class="form-select" id="supervisorEmployeeId" name="employee_id" required>
+                            <option value="">Select Employee</option>
+                            @foreach($employees as $employee)
+                                {{-- Exclude PFMO Head by checking position/access_role if present in the transformed data --}}
+                                @if((isset($employee['position']) && $employee['position'] === 'Head') || (isset($employee['access_role']) && $employee['access_role'] === 'Head'))
+                                    @continue
+                                @endif
+                                <option value="{{ $employee['id'] }}">{{ $employee['name'] }} ({{ $employee['position'] ?? 'Staff' }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="assignSupervisor()">
+                    <i class="fas fa-user-tie me-1"></i><span id="supervisorActionText">Assign</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

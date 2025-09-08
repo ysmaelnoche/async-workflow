@@ -23,6 +23,14 @@ class PFMOEmployeeManagementService
 
         return User::with(['subDepartment', 'employeeInfo'])
             ->where('department_id', $pfmoDepartment->department_id)
+            // Exclude the PFMO Head from assignable employee lists. Some records
+            // may have NULL for position or accessRole so we allow those.
+            ->where(function($q) {
+                $q->whereNull('position')->orWhere('position', '<>', 'Head');
+            })
+            ->where(function($q) {
+                $q->whereNull('accessRole')->orWhere('accessRole', '<>', 'Head');
+            })
             ->get()
             ->map(function ($user) {
                 return [
