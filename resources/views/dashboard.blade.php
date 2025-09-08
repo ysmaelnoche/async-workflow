@@ -106,9 +106,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-            {{-- PFMO Feedback Section (PFMO Users Only) --}}
-            @if($isPFMOUser)
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-6">
@@ -224,8 +221,6 @@
                 </div>
             @endif
 
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             {{-- Requests Table with Tabs --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
@@ -384,10 +379,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-
-    @if($isPFMOUser)
-    {{-- JavaScript for Feedback Section --}}
     <script>
         function toggleComment(button) {
             const commentElement = button.parentElement;
@@ -485,6 +476,5 @@
         }
     </script>
     @endif
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 </x-app-layout>
+

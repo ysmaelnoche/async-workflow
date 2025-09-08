@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\PFMOWorkflowService;
 use App\Models\Department;
-<<<<<<< HEAD
 use App\Models\SubDepartment;
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 use App\Models\User;
 use App\Models\FormRequest;
 use App\Models\FormApproval;
@@ -162,12 +159,6 @@ class PFMOController extends Controller
             'departmentName',
             'position'
         ));
-=======
-        $dashboard = PFMOWorkflowService::getPFMODashboard();
-        $recommendations = PFMOWorkflowService::getPFMORecommendations();
-        
-        return view('pfmo.dashboard', compact('dashboard', 'recommendations'));
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     }
 
     /**
@@ -577,6 +568,4 @@ class PFMOController extends Controller
     }
 }
 
-=======
 }
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80

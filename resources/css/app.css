@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
 /* Workflow Preview Animations */
 .workflow-modal-enter {
     opacity: 0;
@@ -39,8 +38,6 @@
     }
 }
 
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 .highlight-field {
     background-color: #fffacd;
     /* LemonChiffon */

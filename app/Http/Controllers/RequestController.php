@@ -8,10 +8,7 @@ use App\Models\LeaveDetail;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\FormApproval;
-<<<<<<< HEAD
 use App\Models\JobOrder;
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 use App\Services\ApprovalCacheService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -41,7 +38,6 @@ class RequestController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-<<<<<<< HEAD
     public function create()
     {
         $user = Auth::user();
@@ -54,10 +50,6 @@ class RequestController extends Controller
         // Get the oldest pending job order (first in chronological order)
         $oldestPendingJobOrder = $pendingJobOrders->sortBy('date_completed')->first();
 
-=======
-    public function create(): View
-    {
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Get all departments except Administration
         $departments = Department::where(function ($query) {
             $query->where('dept_name', '!=', 'Administration')
@@ -67,12 +59,8 @@ class RequestController extends Controller
         // Pass old input to the view if available (e.g., after a validation error on confirmation page)
         $formData = session()->get('form_data_for_confirmation_edit', []);
         $todayPHT = now()->tz(config('app.timezone'))->toDateString(); // Get current date in PHT
-<<<<<<< HEAD
 
         return view('requests.create', compact('departments', 'formData', 'todayPHT', 'hasPendingFeedback', 'pendingFeedbackCount', 'oldestPendingJobOrder'));
-=======
-        return view('requests.create', compact('departments', 'formData', 'todayPHT'));
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     }
 
     /**
@@ -83,7 +71,6 @@ class RequestController extends Controller
         $requestType = $request->input('request_type');
         $user = Auth::user();
 
-<<<<<<< HEAD
         // Check for pending job order feedback - only block if 2 or more pending
         if (JobOrder::userHasPendingFeedback($user->accnt_id)) {
             $pendingCount = JobOrder::needingFeedbackForUser($user->accnt_id)->count();
@@ -97,8 +84,6 @@ class RequestController extends Controller
             }
         }
 
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         // Custom validation messages for better user experience
         $customMessages = [
             'iom_to_department_id.required' => 'Please select a department for your request.',
@@ -134,11 +119,7 @@ class RequestController extends Controller
                     'max:255',
                     Rule::in([
                         'Computer Repair',
-<<<<<<< HEAD
                         'Network Issue',
-=======
-                        'Network Issue', 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         'Software Support',
                         'Air Conditioning',
                         'Electrical Work',
@@ -148,11 +129,7 @@ class RequestController extends Controller
                         'Security/Access',
                         'Keys/Locks',
                         'Request for Facilities',
-<<<<<<< HEAD
                         'Request for Computer Laboratory',
-=======
-                        'Request for Computer Laboratory', 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         'Request for Venue',
                         'Others'
                     ])
@@ -245,7 +222,6 @@ class RequestController extends Controller
     public function store(Request $request): RedirectResponse
     {
         Log::info('Store method called', ['request_data' => $request->all()]);
-<<<<<<< HEAD
 
         $user = Auth::user();
 
@@ -262,18 +238,10 @@ class RequestController extends Controller
             }
         }
 
-=======
-        
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         try {
             $validatedData = $request->validate([
                 'request_type' => ['required', 'string', Rule::in(['IOM', 'Leave'])],
             ]);
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             Log::info('Initial validation passed', ['request_type' => $validatedData['request_type']]);
         } catch (\Exception $e) {
             Log::error('Store method error', ['error' => $e->getMessage(), 'line' => $e->getLine()]);
@@ -281,10 +249,6 @@ class RequestController extends Controller
         }
 
         $requestType = $validatedData['request_type'];
-<<<<<<< HEAD
-=======
-        $user = Auth::user();
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         $fromDepartmentId = $user->department_id;
 
         try {
@@ -308,11 +272,7 @@ class RequestController extends Controller
                         'max:255',
                         Rule::in([
                             'Computer Repair',
-<<<<<<< HEAD
                             'Network Issue',
-=======
-                            'Network Issue', 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             'Software Support',
                             'Air Conditioning',
                             'Electrical Work',
@@ -322,11 +282,7 @@ class RequestController extends Controller
                             'Security/Access',
                             'Keys/Locks',
                             'Request for Facilities',
-<<<<<<< HEAD
                             'Request for Computer Laboratory',
-=======
-                            'Request for Computer Laboratory', 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             'Request for Venue',
                             'Others'
                         ])
@@ -366,19 +322,10 @@ class RequestController extends Controller
                 );
 
                 // If auto-assignment suggests a different department and user hasn't manually overridden
-<<<<<<< HEAD
-                if (
-                    $autoAssignmentResult &&
-                    $autoAssignmentResult['confidence_score'] >= 50 &&
-                    $autoAssignmentResult['department']->department_id !== $iomValidatedData['iom_to_department_id']
-                ) {
-
-=======
                 if ($autoAssignmentResult && 
                     $autoAssignmentResult['confidence_score'] >= 50 && 
                     $autoAssignmentResult['department']->department_id !== $iomValidatedData['iom_to_department_id']) {
                     
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     Log::info('[Auto-Assignment] Suggestion found but user chose different department', [
                         'form_id' => $formRequest->form_id,
                         'suggested_dept' => $autoAssignmentResult['department']->dept_name,
@@ -396,30 +343,19 @@ class RequestController extends Controller
                         'confidence_score' => $autoAssignmentResult['confidence_score'],
                         'category' => $autoAssignmentResult['category'],
                         'was_auto_assigned' => $autoAssignmentResult['department']->department_id === $iomValidatedData['iom_to_department_id'],
-                        'timestamp' => now()->toISOString()
+                                                'timestamp' => now()->toISOString()
                     ]);
-<<<<<<< HEAD
 
-=======
-                    
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     // If it's a PFMO request, also determine sub-department
                     if ($autoAssignmentResult['department']->dept_code === 'PFMO') {
                         $subDepartmentAssignment = \App\Services\RequestTypeService::getPFMOSubDepartmentAssignment(
                             $iomValidatedData['iom_re'],
                             $iomValidatedData['iom_description']
                         );
-<<<<<<< HEAD
-
-                        if ($subDepartmentAssignment) {
-                            $formRequest->assigned_sub_department = $subDepartmentAssignment['sub_department'];
-
-=======
                         
                         if ($subDepartmentAssignment) {
                             $formRequest->assigned_sub_department = $subDepartmentAssignment['sub_department'];
                             
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             Log::info('[PFMO Sub-Department Assignment]', [
                                 'form_id' => $formRequest->form_id,
                                 'sub_department' => $subDepartmentAssignment['name'],
@@ -428,11 +364,7 @@ class RequestController extends Controller
                             ]);
                         }
                     }
-<<<<<<< HEAD
-
-=======
                     
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                     $formRequest->save();
                 }
 
@@ -808,19 +740,11 @@ class RequestController extends Controller
             }
 
             DB::commit();
-<<<<<<< HEAD
-
-            // Clear approval count caches since new request was submitted
-            // This ensures approval badge counts are updated immediately
-            ApprovalCacheService::clearAllApprovalCaches();
-
-=======
             
             // Clear approval count caches since new request was submitted
             // This ensures approval badge counts are updated immediately
             ApprovalCacheService::clearAllApprovalCaches();
             
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
             return redirect()->route('dashboard')->with('success', $successMessage);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -849,15 +773,10 @@ class RequestController extends Controller
             'toDepartment',
             'iomDetails',
             'leaveDetails',
-<<<<<<< HEAD
             'approvals.approver.employeeInfo',
             'currentApprover',
             'jobOrder.created_by_user.employeeInfo',
             'jobOrder.progressUpdates.updated_by_user' // Load progress updates with user info
-=======
-            'approvals.approver',
-            'currentApprover'
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
         ])->findOrFail($formId);
 
         // Check if user has permission to view this request
@@ -868,14 +787,11 @@ class RequestController extends Controller
             abort(403, 'You do not have permission to view this request.');
         }
 
-<<<<<<< HEAD
+
         // Get signature styles for the feedback form
         $signatureStyles = \App\Models\SignatureStyle::all(['id', 'name', 'font_family']);
 
         return view('requests.track', compact('formRequest', 'signatureStyles'));
-=======
-        return view('requests.track', compact('formRequest'));
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     }
 
     /**

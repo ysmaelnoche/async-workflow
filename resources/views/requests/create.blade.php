@@ -9,7 +9,6 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-<<<<<<< HEAD
                     <!-- Warning for Pending Job Order Fillup -->
                     @if(isset($hasPendingFeedback) && $hasPendingFeedback)
                         <div class="mb-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -77,14 +76,12 @@
                                 </div>
                             </div>
                         </div>
-                    @endif                    <form method="POST" action="{{ route('request.store') }}" id="request-form">
+                    @endif
+
+                    <form method="POST" action="{{ route('request.store') }}" id="request-form">
                         @csrf
                         <input type="hidden" name="form_type" id="form_type" value="{{ old('form_type', $formData['form_type'] ?? '') }}">
                         <input type="hidden" name="to_department_id" id="to_department_id" value="{{ old('to_department_id', $formData['to_department_id'] ?? '') }}">
-=======
-                    <form method="POST" action="{{ route('request.store') }}" id="createRequestForm">
-                        @csrf
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 
                         <!-- Request Type -->
                         <div class="mb-6">
@@ -275,7 +272,6 @@
                             </div>
                         </div>
 
-<<<<<<< HEAD
                         <!-- Workflow Preview Container -->
                         <div id="workflow-preview-container" class="mt-8">
                             <!-- Preview will be populated by JavaScript -->
@@ -294,12 +290,6 @@
                                     {{ __('Submit') }}
                                 </x-primary-button>
                             </div>
-=======
-                        <div class="flex items-center justify-end mt-6 border-t pt-6">
-                            <x-primary-button type="button" id="reviewButton">
-                                {{ __('Submit') }}
-                            </x-primary-button>
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                         </div>
                     </form>
 
@@ -327,7 +317,6 @@
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
-<<<<<<< HEAD
                             const form = document.getElementById('request-form');
                             const requestTypeSelect = document.getElementById('request_type');
                             const formTypeHidden = document.getElementById('form_type');
@@ -336,13 +325,6 @@
                             const leaveFields = document.getElementById('leave_fields');
                             const reviewButton = document.getElementById('reviewButton');
                             const fullPreviewButton = document.getElementById('fullPreviewButton');
-=======
-                            const form = document.getElementById('createRequestForm');
-                            const requestTypeSelect = document.getElementById('request_type');
-                            const iomFields = document.getElementById('iom_fields');
-                            const leaveFields = document.getElementById('leave_fields');
-                            const reviewButton = document.getElementById('reviewButton');
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                             const modal = document.getElementById('confirmationModal');
                             const confirmationContent = document.getElementById('confirmationContent');
                             const editButton = document.getElementById('editButton');
@@ -488,10 +470,7 @@
                                     if (option.value.includes(deptName)) {
                                         iomToDepartmentNameDisplay.value = option.value;
                                         iomToDepartmentIdHidden.value = option.getAttribute('data-id');
-<<<<<<< HEAD
                                         toDepartmentIdHidden.value = option.getAttribute('data-id');
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                         
                                         break;
                                     }
@@ -517,21 +496,15 @@
                                 iomFields.classList.add('hidden');
                                 leaveFields.classList.add('hidden');
                                 reviewButton.disabled = selectedType === '' || selectedType === null;
-<<<<<<< HEAD
                                 
                                 // Update hidden form_type field
                                 formTypeHidden.value = selectedType || '';
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 
                                 document.querySelectorAll('.specific-fields [required]').forEach(el => el.removeAttribute('required'));
 
                                 if (selectedType === 'IOM') {
                                     iomFields.classList.remove('hidden');
-<<<<<<< HEAD
                                     fullPreviewButton.classList.remove('hidden');
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                     iomRequiredFields.forEach(id => {
                                         const el = document.getElementById(id);
                                         if(el) el.setAttribute('required', 'required');
@@ -541,19 +514,13 @@
                                     handleSubjectSelection();
                                 } else if (selectedType === 'Leave') {
                                     leaveFields.classList.remove('hidden');
-<<<<<<< HEAD
                                     fullPreviewButton.classList.remove('hidden');
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                     leaveRequiredFields.forEach(id => {
                                         const el = document.getElementById(id);
                                         if(el) el.setAttribute('required', 'required');
                                     });
-<<<<<<< HEAD
                                 } else {
                                     fullPreviewButton.classList.add('hidden');
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                 }
                             }
 
@@ -727,22 +694,15 @@
                                             const option = departmentDatalist.options[i];
                                             if (option.value === inputValue) {
                                                 iomToDepartmentIdHidden.value = option.getAttribute('data-id');
-<<<<<<< HEAD
                                                 toDepartmentIdHidden.value = option.getAttribute('data-id');
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                                 found = true;
                                                 break;
                                             }
                                         }
                                     }
                                     if (!found) {
-<<<<<<< HEAD
                                         iomToDepartmentIdHidden.value = '';
                                         toDepartmentIdHidden.value = '';
-=======
-                                        iomToDepartmentIdHidden.value = ''; 
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                     } else {
                                         // Check if the department is Administration
                                         if (inputValue.toLowerCase().includes("administration") || inputValue.toLowerCase().includes("admin")) {
@@ -779,10 +739,7 @@
                                 iomToDepartmentNameDisplay.addEventListener('change', function() {
                                     if (this.value === '') {
                                         iomToDepartmentIdHidden.value = '';
-<<<<<<< HEAD
                                         toDepartmentIdHidden.value = '';
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                                     }
                                 });
                             }
@@ -884,12 +841,9 @@
                             setupAutoAssignment();
                         });
                     </script>
-<<<<<<< HEAD
                     
                     <!-- Include Workflow Preview JavaScript -->
                     <script src="{{ asset('js/workflow-preview.js') }}"></script>
-=======
->>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
                 </div>
             </div>
         </div>

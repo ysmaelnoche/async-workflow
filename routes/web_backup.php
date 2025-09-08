@@ -18,6 +18,7 @@ if (app()->environment('local')) {
     include __DIR__ . '/debug-routes.php';
     include __DIR__ . '/debug-department-routes.php';
     include __DIR__ . '/test-employee-management.php'; // Add test route
+    include __DIR__ . '/debug-notification-badge.php';
 }
 
 // API Routes for user lookup (before authentication)
@@ -43,6 +44,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::middleware(['auth', 'prevent.admin'])->group(function () {
+<<<<<<< HEAD
     // Dashboard - Check user role and redirect appropriately
     Route::get('/dashboard', function () {
         $user = auth()->user();
@@ -63,6 +65,11 @@ Route::middleware(['auth', 'prevent.admin'])->group(function () {
 
     // Dashboard API routes
     Route::get('/api/dashboard/more-feedback', [DashboardController::class, 'moreFeedback'])->name('dashboard.more-feedback');
+=======
+    // Dashboard - Employee dashboard only
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->middleware(['verified'])->name('dashboard');
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 
     // Unified Requests - Employee only
     Route::get('/requests', [RequestController::class, 'index'])->name('request.index'); // For listing all types of requests
@@ -76,6 +83,7 @@ Route::middleware(['auth', 'prevent.admin'])->group(function () {
     // Notification Count API for badge notifications
     Route::get('/notifications/count', [\App\Http\Controllers\NotificationController::class, 'getCount'])->name('notifications.count');
 
+<<<<<<< HEAD
     // Job Order Routes - Employee only (PFMO staff/head)
     Route::get('/job-orders', [\App\Http\Controllers\JobOrderController::class, 'index'])->name('job-orders.index');
     Route::get('/job-orders/{jobOrder}', [\App\Http\Controllers\JobOrderController::class, 'show'])->name('job-orders.show');
@@ -99,6 +107,8 @@ Route::middleware(['auth', 'prevent.admin'])->group(function () {
     Route::post('/job-orders/{jobOrder}/feedback', [\App\Http\Controllers\JobOrderFeedbackController::class, 'submitFeedback'])->name('job-orders.submit-feedback');
     Route::get('/job-orders/feedback/check', [\App\Http\Controllers\JobOrderFeedbackController::class, 'checkPendingFeedback'])->name('job-orders.check-feedback');
 
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
     // Approvals Route (for users with 'Approver' accessRole) - Employee only
     Route::get('/approvals', [ApprovalController::class, 'index'])
         ->name('approvals.index')
@@ -153,13 +163,15 @@ Route::middleware(['auth', 'prevent.admin'])->group(function () {
     Route::get('/approvals', [ApprovalController::class, 'index'])->name('approvals.index');
     Route::get('/approvals/check-updates', [ApprovalController::class, 'checkUpdates'])->name('approval.check-updates');
     Route::get('/approval/{formId}', [ApprovalController::class, 'view'])->name('approval.view');
-
+<<<<<<< HEAD
 
     // Supervisor Assignment Routes (PFMO Head only)
     Route::post('/supervisor/assign', [SupervisorAssignmentController::class, 'assign'])
         ->name('supervisor.assign');
     Route::post('/supervisor/remove', [SupervisorAssignmentController::class, 'remove'])
         ->name('supervisor.remove');
+=======
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 });
 
 // Profile Routes - Accessible by all authenticated users including Admin
@@ -169,6 +181,7 @@ Route::middleware(['auth'])->group(function () {
     // Note: Delete account route removed as per requirements
 });
 
+<<<<<<< HEAD
 // Secretary routes - for secretaries who can submit proxy requests
 Route::middleware(['auth'])->prefix('secretary')->name('secretary.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\SecretaryController::class, 'dashboard'])->name('dashboard');
@@ -178,6 +191,9 @@ Route::middleware(['auth'])->prefix('secretary')->name('secretary.')->group(func
 });
 
 // Admin routes - require admin role
+=======
+// Admin Routes
+>>>>>>> b9beceb5b2f09379b09569e8f3475ddab1b2fd80
 Route::middleware(['auth', 'admin', 'prevent.employee'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     // Add other admin routes here
