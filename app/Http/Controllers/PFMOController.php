@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -566,4 +566,3 @@ class PFMOController extends Controller
     }
 }
 
-}
