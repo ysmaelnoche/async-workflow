@@ -6,47 +6,56 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
+    /* Simplified, system-consistent header */
     .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 2rem 0;
-        margin-bottom: 2rem;
+        background: #f8f9fa; /* light gray */
+        color: #212529; /* body text */
+        padding: 1.5rem 0;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #e9ecef;
     }
     
     .employee-card {
-        transition: all 0.3s ease;
-        border: 1px solid #e3e6f0;
+        transition: all 0.15s ease;
+        border: 1px solid #e9ecef;
+        background: #ffffff;
     }
     
     .employee-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        transform: translateY(-1px);
+        box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.04);
     }
     
+    /* Supervisor: primary blue, Employee: neutral gray */
     .badge-supervisor {
-        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        background: #0d6efd; /* bootstrap primary */
+        color: #fff;
     }
     
     .badge-employee {
-        background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+        background: #6c757d; /* bootstrap secondary */
+        color: #fff;
     }
     
     .sub-dept-card {
-        border-left: 4px solid #4e73df;
+        border-left: 4px solid #0d6efd; /* primary accent */
+        background: #fff;
     }
     
     .action-btn {
-        border: none;
+        border: 1px solid #0d6efd;
+        background: transparent;
+        color: #0d6efd;
         border-radius: 0.35rem;
-        padding: 0.375rem 0.75rem;
+        padding: 0.35rem 0.65rem;
         font-size: 0.875rem;
-        line-height: 1.5;
-        transition: all 0.3s ease;
     }
     
     .action-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        background: rgba(13,110,253,0.06);
+        color: #0d6efd;
+        transform: none;
+        box-shadow: none;
     }
     
     .toast-container {
@@ -54,6 +63,13 @@
         top: 20px;
         right: 20px;
         z-index: 1055;
+    }
+    
+    /* Make table more compact and readable */
+    #employeesTable th, #employeesTable td {
+        vertical-align: middle;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
     }
 </style>
 @endpush
