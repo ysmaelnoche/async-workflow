@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Part 3: Preview Functionality - Implementation Complete</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-50">
+        <div class="min-h-screen py-12">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Header -->
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                        Part 3: Preview Functionality
+                    </h1>
+                    <p class="text-xl text-gray-600">
+                        Complete Workflow Preview Implementation
+                    </p>
+                    <div
+                        class="mt-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800"
+                    >
+                        ✅ Implementation Complete
+                    </div>
+                </div>
+
+                <!-- Features Overview -->
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+                >
+                    <!-- Service Enhancement -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"
+                            >
+                                <svg
+                                    class="w-6 h-6 text-blue-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-gray-900 ml-3"
+                            >
+                                Enhanced Service
+                            </h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Comprehensive WorkflowPreviewService with detailed
+                            workflow generation
+                        </p>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>• IOM workflow mapping</li>
+                            <li>• Leave request workflows</li>
+                            <li>• PFMO enhanced routing</li>
+                            <li>• Auto-assignment integration</li>
+                        </ul>
+                    </div>
+
+                    <!-- API Endpoints -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center"
+                            >
+                                <svg
+                                    class="w-6 h-6 text-green-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-gray-900 ml-3"
+                            >
+                                API Endpoints
+                            </h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            RESTful API for dynamic workflow preview generation
+                        </p>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>• POST /workflow/preview</li>
+                            <li>• POST /workflow/preview/quick</li>
+                            <li>• GET /workflow/templates</li>
+                            <li>• JSON responses</li>
+                        </ul>
+                    </div>
+
+                    <!-- UI Components -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center"
+                            >
+                                <svg
+                                    class="w-6 h-6 text-purple-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17v4a2 2 0 002 2h4M13 13h3a2 2 0 012 2v1M13 13l-2-2"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-gray-900 ml-3"
+                            >
+                                UI Components
+                            </h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Beautiful Blade components and JavaScript for
+                            interactive previews
+                        </p>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>• Workflow timeline display</li>
+                            <li>• Interactive preview modal</li>
+                            <li>• Real-time form updates</li>
+                            <li>• Responsive design</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sample Workflow Preview -->
+                <div class="bg-white rounded-lg shadow-md p-8 mb-12">
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+                        Sample Workflow Preview
+                    </h2>
+
+                    <!-- Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <svg
+                                    class="w-8 h-8 text-blue-600 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
+                                </svg>
+                                <div>
+                                    <div
+                                        class="text-2xl font-bold text-blue-600"
+                                    >
+                                        2 Days
+                                    </div>
+                                    <div class="text-sm text-blue-700">
+                                        Estimated Completion
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <svg
+                                    class="w-8 h-8 text-green-600 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                    ></path>
+                                </svg>
+                                <div>
+                                    <div
+                                        class="text-lg font-semibold text-green-700"
+                                    >
+                                        ICT Department
+                                    </div>
+                                    <div class="text-sm text-green-600">
+                                        Target Department
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <svg
+                                    class="w-8 h-8 text-purple-600 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
+                                </svg>
+                                <div>
+                                    <div
+                                        class="text-lg font-semibold text-purple-700"
+                                    >
+                                        Standard
+                                    </div>
+                                    <div class="text-sm text-purple-600">
+                                        Approval Process
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Workflow Steps -->
+                    <div class="space-y-4">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                            Workflow Steps
+                        </h4>
+
+                        <!-- Step 1 -->
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-10 h-10 rounded-full flex items-center justify-center bg-blue-600 text-white"
+                                >
+                                    <span class="text-sm font-semibold">1</span>
+                                </div>
+                                <div
+                                    class="w-0.5 h-12 bg-gray-300 ml-5 mt-2"
+                                ></div>
+                            </div>
+                            <div class="flex-1 min-w-0 pb-8">
+                                <div class="flex items-center justify-between">
+                                    <h5
+                                        class="text-lg font-medium text-gray-900"
+                                    >
+                                        Request Submission
+                                    </h5>
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                                        >Current</span
+                                    >
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    You submit the IOM request
+                                </p>
+                                <div
+                                    class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm"
+                                >
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            ><span class="font-medium"
+                                                >You</span
+                                            >
+                                            (Staff)</span
+                                        >
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            >Your Department</span
+                                        >
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            >Immediate</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 text-gray-600"
+                                >
+                                    <span class="text-sm font-semibold">2</span>
+                                </div>
+                                <div
+                                    class="w-0.5 h-12 bg-gray-300 ml-5 mt-2"
+                                ></div>
+                            </div>
+                            <div class="flex-1 min-w-0 pb-8">
+                                <div class="flex items-center justify-between">
+                                    <h5
+                                        class="text-lg font-medium text-gray-900"
+                                    >
+                                        Department Head Review
+                                    </h5>
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                                        >Pending</span
+                                    >
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    Your department head reviews and approves
+                                    the request
+                                </p>
+                                <div
+                                    class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm"
+                                >
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            ><span class="font-medium"
+                                                >Department Head</span
+                                            >
+                                            (Head)</span
+                                        >
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            >Your Department</span
+                                        >
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            >1-2 business days</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 text-gray-600"
+                                >
+                                    <span class="text-sm font-semibold">3</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <h5
+                                        class="text-lg font-medium text-gray-900"
+                                    >
+                                        Request Completed
+                                    </h5>
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                                        >Pending</span
+                                    >
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    Request has been fully processed and
+                                    approved
+                                </p>
+                                <div
+                                    class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm"
+                                >
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            ><span class="font-medium"
+                                                >System</span
+                                            >
+                                            (Automated)</span
+                                        >
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            >System</span
+                                        >
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg
+                                            class="w-4 h-4 text-gray-400 mr-2"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="text-gray-700"
+                                            >Immediate</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Implementation Summary -->
+                <div
+                    class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8"
+                >
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+                        Implementation Summary
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3
+                                class="text-lg font-semibold text-gray-900 mb-4"
+                            >
+                                Files Created/Modified
+                            </h3>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-green-500 rounded-full mr-3"
+                                    ></span>
+                                    app/Services/WorkflowPreviewService.php
+                                    (Enhanced)
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-green-500 rounded-full mr-3"
+                                    ></span>
+                                    app/Http/Controllers/WorkflowPreviewController.php
+                                    (New)
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-green-500 rounded-full mr-3"
+                                    ></span>
+                                    resources/views/components/workflow-preview.blade.php
+                                    (New)
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-green-500 rounded-full mr-3"
+                                    ></span>
+                                    public/js/workflow-preview.js (New)
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-blue-500 rounded-full mr-3"
+                                    ></span>
+                                    resources/views/requests/create.blade.php
+                                    (Modified)
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-blue-500 rounded-full mr-3"
+                                    ></span>
+                                    routes/web.php (Modified)
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3
+                                class="text-lg font-semibold text-gray-900 mb-4"
+                            >
+                                Key Features
+                            </h3>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-purple-500 rounded-full mr-3"
+                                    ></span>
+                                    Real-time workflow preview as user fills
+                                    form
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-purple-500 rounded-full mr-3"
+                                    ></span>
+                                    Detailed step-by-step approval process
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-purple-500 rounded-full mr-3"
+                                    ></span>
+                                    Estimated completion times and actors
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-purple-500 rounded-full mr-3"
+                                    ></span>
+                                    PFMO enhanced workflow support
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-purple-500 rounded-full mr-3"
+                                    ></span>
+                                    Interactive modal for full preview
+                                </li>
+                                <li class="flex items-center">
+                                    <span
+                                        class="w-2 h-2 bg-purple-500 rounded-full mr-3"
+                                    ></span>
+                                    Mobile-responsive design
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-8 p-4 bg-white rounded-lg border border-gray-200"
+                    >
+                        <p class="text-lg text-gray-800 font-medium">
+                            🎉 Part 3 - Preview Functionality is now complete!
+                        </p>
+                        <p class="text-gray-600 mt-2">
+                            Users can now see the complete workflow process
+                            before submitting their requests, providing
+                            transparency and setting proper expectations for
+                            approval timelines.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,216 @@
+<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\SignatureStyle; // Add this line
+
+class User extends Authenticatable
+{
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'tb_account';
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'accnt_id';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'int';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'username',
+        'password',
+        'Emp_No',
+        'department_id',
+        'position',
+        'accessRole',
+        'status',
+        // Ensure created_at and updated_at are not in fillable if relying on Eloquent defaults
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        // 'remember_token', // tb_account doesn't have remember_token by default
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            // 'email_verified_at' => 'datetime', // tb_account doesn't have email_verified_at
+            'password' => 'hashed',
+        ];
+    }
+
+    /**
+     * Find the user by their username.
+     *
+     * @param  string  $username
+     * @return \App\Models\User|null
+     */
+    public function findForPassport($username)
+    {
+        return $this->where('username', $username)->first();
+    }
+
+    /**
+     * Get the department associated with the user.
+     */
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'department_id');
+    }
+
+    public function employeeInfo(): BelongsTo
+    {
+        return $this->belongsTo(EmployeeInfo::class, 'Emp_No', 'Emp_No');
+    }
+
+    /**
+     * Get the user's signature style.
+     */
+    public function signatureStyle(): BelongsTo
+    {
+        return $this->belongsTo(SignatureStyle::class, 'signature_style_id');
+    }
+
+    /**
+     * Get the approver permissions for the user.
+     */
+    public function approverPermissions(): HasOne
+    {
+        return $this->hasOne(ApproverPermission::class, 'accnt_id', 'accnt_id');
+    }
+
+    public function subDepartment(): BelongsTo
+    {
+        return $this->belongsTo(SubDepartment::class, 'sub_department_id');
+    }
+
+    /**
+     * Get job orders assigned to this user.
+     */
+    public function assignedJobOrders()
+    {
+        return $this->hasMany(JobOrder::class, 'assigned_to', 'accnt_id');
+    }
+
+    /**
+     * Check if the user can approve requests with a specific status.
+     */
+    public function canApproveStatus(string $status): bool
+    {
+        // Non-approvers can't approve anything
+        if ($this->accessRole !== 'Approver') {
+            return false;
+        }
+
+        // VPAA has full approval rights over any request in any state
+        if ($this->position === 'VPAA') {
+            return true;
+        }
+
+        $permissions = $this->approverPermissions; // Fetches the related ApproverPermission record
+
+        // Department Heads: Check permissions first, then fall back to general role-based ability.
+        if ($this->position === 'Head') {
+            if ($permissions) { // If specific permissions exist, use them
+                return match ($status) {
+                    'Pending' => $permissions->can_approve_pending,
+                    'In Progress', 'Pending Target Department Approval' => $permissions->can_approve_in_progress,
+                    default => false,
+                };
+            }
+            // Default for Heads if no specific permission entry: can handle typical Head tasks.
+            return match ($status) {
+                'Pending', // e.g., Noting their own staff's request
+                'In Progress', // e.g., Approving a request targeted to their department
+                'Pending Target Department Approval' // Similar to 'In Progress' for Heads
+                => true,
+                default => false,
+            };
+        }
+
+        // For other approvers (e.g., Staff with Approver role, not Head or VPAA):
+        // Strictly based on their ApproverPermission record.
+        if (!$permissions) {
+            return false;
+        }
+        return match ($status) {
+            'Pending' => $permissions->can_approve_pending,
+            'In Progress', 'Pending Target Department Approval' => $permissions->can_approve_in_progress,
+            default => false,
+        };
+    }
+
+    /**
+     * Check if the user can submit proxy requests for employees.
+     */
+    public function canSubmitProxyRequests(): bool
+    {
+        return $this->position === 'Secretary' && $this->accessRole === 'Requestor';
+    }
+
+    /**
+     * Check if the user is a department head.
+     */
+    public function isDepartmentHead(): bool
+    {
+        return $this->position === 'Head';
+    }
+
+    /**
+     * Check if the user is a secretary.
+     */
+    public function isSecretary(): bool
+    {
+        return $this->position === 'Secretary';
+    }
+
+    // Define relationships if needed, for example:
+    // public function employee()
+    // {
+    //     return $this->belongsTo(EmployeeInfo::class, 'Emp_No', 'Emp_No');
+    // }
+}

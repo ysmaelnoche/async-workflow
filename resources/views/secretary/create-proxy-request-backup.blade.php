@@ -1,0 +1,588 @@
+﻿@extends('layouts.app')
+
+@section('content')
+<div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Create Proxy Request</h1>
+                    <p class                    <!-- Attachments -->
+                    <div>
+                        <label for="attachments" class="block text-sm font-medium text-gray-700 mb-2">Attachments (Optional)</label>ray-600">Submit a request on behalf of: <span class="font-medium">{{ $employee->full_name }}</span></p>
+                </div>
+                <div>
+                    <a href="{{ route('secretary.select-employee') }}" 
+                       class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Change Employee
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        @if(session('error'))
+            <div class="mb-6 bg-red-50 border border-red-200 rounded-md p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-red-800">{{ session('error') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- Employee Info Card -->
+        <div class="bg-white rounded-lg shadow mb-6">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Employee Information</h3>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-16 w-16">
+                        <div class="h-16 w-16 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span class="text-xl font-medium text-white">
+                                {{ strtoupper(substr($employee->FirstName, 0, 1) . substr($employee->LastName, 0, 1)) }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ml-6">
+                        <h4 class="text-xl font-semibold text-gray-900">{{ $employee->full_name }}</h4>
+                        <p class="text-sm text-gray-600">Employee ID: {{ $employee->Emp_No }}</p>
+                        <p class="text-sm text-gray-600">Department: {{ $employee->user->department->dept_name ?? 'N/A' }}</p>
+                        <p class="text-sm text-gray-600">Position: {{ $employee->user->position ?? 'N/A' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Request Form -->
+        <form id="proxy-request-form" action="{{ route('secretary.store-proxy-request') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="employee_id" value="{{ $employee->Emp_No }}">
+            <input type="hidden" name="actual_requestor_name" value="{{ $employee->full_name }}">
+            <input type="hidden" name="actual_requestor_employee_id" value="{{ $employee->Emp_No }}">
+            <input type="hidden" name="actual_requestor_department" value="{{ $employee->user->department->dept_name ?? '' }}">
+            <input type="hidden" name="actual_requestor_position" value="{{ $employee->user->position ?? '' }}">
+            <input type="hidden" name="is_proxy_submission" value="1">
+
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Request Details</h3>
+                </div>
+                <div class="p-6 space-y-6">
+                    <!-- Form Type Selection -->
+                    <div>
+                        <label for="form_type" class="block text-sm font-medium text-gray-700 mb-2">Form Type <span class="text-red-500">*</span></label>
+                        <select id="form_type" name="form_type" required 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select form type...</option>
+                            <option value="IOM" {{ old('form_type', $formType) == 'IOM' ? 'selected' : '' }}>Internal Office Memorandum (IOM)</option>
+                            <option value="Leave" {{ old('form_type', $formType) == 'Leave' ? 'selected' : '' }}>Leave Form</option>
+                        </select>
+                        @error('form_type')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Request Type Selection (shown only for IOM) -->
+                    <div id="request-type-container" style="display: none;">
+                        <label for="request_type" class="block text-sm font-medium text-gray-700 mb-2">Request Type <span class="text-red-500">*</span></label>
+                        <select id="request_type" name="request_type" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select request type...</option>
+                            <option value="Vehicle Request">Vehicle Request</option>
+                            <option value="Aircondition Repair">Aircondition Repair</option>
+                            <option value="Electrical Repair">Electrical Repair</option>
+                            <option value="IT Support">IT Support</option>
+                            <option value="Plumbing Repair">Plumbing Repair</option>
+                            <option value="Carpentry Work">Carpentry Work</option>
+                            <option value="Cleaning Service">Cleaning Service</option>
+                            <option value="Equipment Maintenance">Equipment Maintenance</option>
+                            <option value="Purchase Request">Purchase Request</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        @error('request_type')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        
+                        <!-- Routing Information -->
+                        <div id="routing-info" class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-md hidden">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span id="routing-description" class="text-sm text-blue-800"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        console.log('🚀 FORM SCRIPT LOADED - DOM READY');
+                        
+                        // Request type routing mapping
+                        const requestTypeRouting = {
+                            'Vehicle Request': { department: 'PFMO', description: 'Vehicle Request - routed to Physical Facilities Management Office' },
+                            'Aircondition Repair': { department: 'PFMO', description: 'AC Repair - routed to Physical Facilities Management Office' },
+                            'Electrical Repair': { department: 'PFMO', description: 'Electrical Repair - routed to Physical Facilities Management Office' },
+                            'IT Support': { department: 'IT Department', description: 'IT Support - routed to College of Computer Studies' },
+                            'Plumbing Repair': { department: 'PFMO', description: 'Plumbing Repair - routed to Physical Facilities Management Office' },
+                            'Carpentry Work': { department: 'PFMO', description: 'Carpentry Work - routed to Physical Facilities Management Office' },
+                            'Cleaning Service': { department: 'PFMO', description: 'Cleaning Service - routed to Physical Facilities Management Office' },
+                            'Equipment Maintenance': { department: 'PFMO', description: 'Equipment Maintenance - routed to Physical Facilities Management Office' },
+                            'Purchase Request': { department: 'Administration', description: 'Purchase Request - routed to Administration (Finance)' },
+                            'Other': { department: 'PFMO', description: 'Other requests - routed to Physical Facilities Management Office' }
+                        };
+                        
+                        // Get form elements
+                        const formType = document.getElementById('form_type');
+                        const requestContainer = document.getElementById('request-type-container');
+                        const requestTypeSelect = document.getElementById('request_type');
+                        const fieldsContainer = document.getElementById('form-specific-fields');
+                        const routingInfo = document.getElementById('routing-info');
+                        const routingDescription = document.getElementById('routing-description');
+                        
+                        console.log('🔍 Elements found:', {
+                            formType: !!formType,
+                            requestContainer: !!requestContainer,
+                            requestTypeSelect: !!requestTypeSelect,
+                            fieldsContainer: !!fieldsContainer,
+                            routingInfo: !!routingInfo
+                        });
+                        
+                        // INITIAL STATE: Hide everything
+                        if (requestContainer) {
+                            requestContainer.style.display = 'none';
+                        }
+                        if (fieldsContainer) {
+                            fieldsContainer.style.display = 'none';
+                        }
+                        if (routingInfo) {
+                            routingInfo.classList.add('hidden');
+                        }
+                        
+                        // Check CURRENT form type value and respond accordingly
+                        if (formType) {
+                            const currentFormType = formType.value;
+                            console.log('📋 Current form type on load:', currentFormType);
+                            
+                            if (currentFormType === 'IOM') {
+                                console.log('🎯 IOM detected - showing request type dropdown');
+                                if (requestContainer) {
+                                    requestContainer.style.display = 'block';
+                                    requestTypeSelect.required = true;
+                                }
+                                // Keep fields hidden until request type is selected
+                                if (fieldsContainer) {
+                                    fieldsContainer.style.display = 'none';
+                                }
+                            } else if (currentFormType === 'Leave') {
+                                console.log('📝 Leave detected - showing leave fields');
+                                if (fieldsContainer) {
+                                    fieldsContainer.style.display = 'block';
+                                    loadLeaveFields();
+                                }
+                            }
+                        }
+                        
+                        // Form type change handler
+                        if (formType) {
+                            formType.addEventListener('change', function() {
+                                console.log('🔄 Form type changed to:', this.value);
+                                
+                                // Reset everything first
+                                if (requestContainer) {
+                                    requestContainer.style.display = 'none';
+                                    requestTypeSelect.required = false;
+                                    requestTypeSelect.value = ''; // Clear selection
+                                }
+                                if (fieldsContainer) {
+                                    fieldsContainer.style.display = 'none';
+                                    fieldsContainer.innerHTML = ''; // Clear content
+                                }
+                                if (routingInfo) {
+                                    routingInfo.classList.add('hidden');
+                                }
+                                
+                                if (this.value === 'IOM') {
+                                    console.log('📋 Showing IOM request type dropdown');
+                                    if (requestContainer) {
+                                        requestContainer.style.display = 'block';
+                                        requestTypeSelect.required = true;
+                                    }
+                                } else if (this.value === 'Leave') {
+                                    console.log('📝 Showing Leave form fields');
+                                    if (fieldsContainer) {
+                                        fieldsContainer.style.display = 'block';
+                                        loadLeaveFields();
+                                    }
+                                }
+                            });
+                        }
+                        
+                        // Request type change handler (for IOM)
+                        if (requestTypeSelect) {
+                            requestTypeSelect.addEventListener('change', function() {
+                                console.log('🎯 Request type changed to:', this.value);
+                                
+                                if (this.value) {
+                                    console.log('✅ Loading IOM fields for:', this.value);
+                                    // Show IOM fields
+                                    if (fieldsContainer) {
+                                        fieldsContainer.style.display = 'block';
+                                        loadIOMFields();
+                                    }
+                                    
+                                    // Show routing info
+                                    if (requestTypeRouting[this.value] && routingInfo && routingDescription) {
+                                        routingDescription.textContent = requestTypeRouting[this.value].description;
+                                        routingInfo.classList.remove('hidden');
+                                    }
+                                    
+                                    // Auto-populate after loading fields
+                                    setTimeout(() => {
+                                        populateIOMFields(this.value);
+                                    }, 100);
+                                } else {
+                                    console.log('❌ No request type - hiding fields');
+                                    // Hide fields if no request type selected
+                                    if (fieldsContainer) {
+                                        fieldsContainer.style.display = 'none';
+                                    }
+                                    if (routingInfo) {
+                                        routingInfo.classList.add('hidden');
+                                    }
+                                }
+                            });
+                        }
+                        
+                        function loadLeaveFields() {
+                            if (!fieldsContainer) return;
+                            
+                            fieldsContainer.innerHTML = 
+                                '<div class="bg-green-50 p-4 rounded-lg mb-6">' +
+                                    '<h3 class="text-lg font-semibold text-green-800 mb-3">Leave Form Details</h3>' +
+                                    '<p class="text-sm text-green-600">Fill out your leave request information below.</p>' +
+                                '</div>' +
+                                
+                                '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">' +
+                                    '<div>' +
+                                        '<label for="leave_type" class="block text-sm font-medium text-gray-700 mb-2">Leave Type <span class="text-red-500">*</span></label>' +
+                                        '<select id="leave_type" name="leave_type" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">' +
+                                            '<option value="">Select leave type...</option>' +
+                                            '<option value="Sick Leave">Sick Leave</option>' +
+                                            '<option value="Vacation Leave">Vacation Leave</option>' +
+                                            '<option value="Emergency Leave">Emergency Leave</option>' +
+                                            '<option value="Maternity Leave">Maternity Leave</option>' +
+                                            '<option value="Paternity Leave">Paternity Leave</option>' +
+                                        '</select>' +
+                                    '</div>' +
+                                    '<div>' +
+                                        '<label for="duration" class="block text-sm font-medium text-gray-700 mb-2">Duration <span class="text-red-500">*</span></label>' +
+                                        '<input type="text" id="duration" name="duration" required placeholder="e.g., 1 day, 3 days, 1 week" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">' +
+                                    '</div>' +
+                                '</div>' +
+                                
+                                '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">' +
+                                    '<div>' +
+                                        '<label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Start Date <span class="text-red-500">*</span></label>' +
+                                        '<input type="date" id="start_date" name="start_date" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">' +
+                                    '</div>' +
+                                    '<div>' +
+                                        '<label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">End Date <span class="text-red-500">*</span></label>' +
+                                        '<input type="date" id="end_date" name="end_date" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">' +
+                                    '</div>' +
+                                '</div>' +
+                                
+                                '<div>' +
+                                    '<label for="reason" class="block text-sm font-medium text-gray-700 mb-2">Reason <span class="text-red-500">*</span></label>' +
+                                    '<textarea id="reason" name="reason" rows="4" required placeholder="Please provide a reason for your leave..." class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"></textarea>' +
+                                '</div>';
+                        }
+                        
+                        function loadIOMFields() {
+                            if (!fieldsContainer) return;
+                            
+                            fieldsContainer.innerHTML = 
+                                '<div class="bg-blue-50 p-4 rounded-lg mb-6">' +
+                                    '<h3 class="text-lg font-semibold text-blue-800 mb-3">Internal Office Memorandum (IOM) Details</h3>' +
+                                    '<p class="text-sm text-blue-600">Fill out the information below for your IOM request.</p>' +
+                                '</div>' +
+                                
+                                '<input type="hidden" id="title" name="title" value="">' +
+                                
+                                '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">' +
+                                    '<div>' +
+                                        '<label for="date_needed" class="block text-sm font-medium text-gray-700 mb-2">Date Needed <span class="text-red-500">*</span></label>' +
+                                        '<input type="date" id="date_needed" name="date_needed" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">' +
+                                    '</div>' +
+                                    '<div>' +
+                                        '<label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priority <span class="text-red-500">*</span></label>' +
+                                        '<select id="priority" name="priority" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">' +
+                                            '<option value="">Select priority...</option>' +
+                                            '<option value="Routine">Routine</option>' +
+                                            '<option value="Urgent">Urgent</option>' +
+                                            '<option value="Rush">Rush</option>' +
+                                        '</select>' +
+                                    '</div>' +
+                                '</div>' +
+                                
+                                '<div>' +
+                                    '<label for="purpose" class="block text-sm font-medium text-gray-700 mb-2">Purpose <span class="text-red-500">*</span></label>' +
+                                    '<input type="text" id="purpose" name="purpose" maxlength="100" required placeholder="Brief purpose of the request (max 100 characters)" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">' +
+                                    '<p class="text-xs text-gray-500 mt-1">Maximum 100 characters</p>' +
+                                '</div>' +
+                                
+                                '<div>' +
+                                    '<label for="body" class="block text-sm font-medium text-gray-700 mb-2">Request Details <span class="text-red-500">*</span></label>' +
+                                    '<textarea id="body" name="body" rows="6" required placeholder="Detailed description of your request..." class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"></textarea>' +
+                                '</div>' +
+                                
+                                '<div class="bg-green-50 p-4 rounded-lg">' +
+                                    '<h4 class="text-sm font-semibold text-green-800 mb-2">Auto-Assignment Information</h4>' +
+                                    '<p class="text-sm text-green-700" id="assignment-info">This request will be automatically routed to the appropriate department.</p>' +
+                                '</div>';
+                        }
+                        
+                        function populateIOMFields(requestType) {
+                            console.log('Auto-populating fields for:', requestType);
+                            
+                            // Set title
+                            const titleField = document.getElementById('title');
+                            if (titleField) titleField.value = requestType;
+                            
+                            // Set purpose
+                            const purposeField = document.getElementById('purpose');
+                            if (purposeField && !purposeField.value) purposeField.value = requestType;
+                            
+                            // Set priority
+                            const priorityField = document.getElementById('priority');
+                            if (priorityField) {
+                                const priorityMapping = {
+                                    'Vehicle Request': 'Routine',
+                                    'Aircondition Repair': 'Urgent',
+                                    'Electrical Repair': 'Urgent',
+                                    'IT Support': 'Routine',
+                                    'Plumbing Repair': 'Urgent',
+                                    'Carpentry Work': 'Routine',
+                                    'Cleaning Service': 'Routine',
+                                    'Equipment Maintenance': 'Routine',
+                                    'Purchase Request': 'Routine',
+                                    'Other': 'Routine'
+                                };
+                                priorityField.value = priorityMapping[requestType] || 'Routine';
+                            }
+                            
+                            // Auto-assign department
+                            const targetDeptField = document.getElementById('to_department_id');
+                            if (targetDeptField && requestTypeRouting[requestType]) {
+                                const departmentInfo = requestTypeRouting[requestType];
+                                const departmentIdMapping = {
+                                    'PFMO': '1',
+                                    'IT Department': '15',
+                                    'Administration': '14'
+                                };
+                                const deptId = departmentIdMapping[departmentInfo.department];
+                                if (deptId) {
+                                    targetDeptField.value = deptId;
+                                    targetDeptField.disabled = false;
+                                }
+                            }
+                            
+                            // Update assignment info
+                            const assignmentInfo = document.getElementById('assignment-info');
+                            if (assignmentInfo && requestTypeRouting[requestType]) {
+                                assignmentInfo.textContent = requestTypeRouting[requestType].description;
+                            }
+                        }
+                        
+                    });
+                    </script>
+
+                    <!-- Form Specific Fields Container -->
+                    <div id="form-specific-fields" class="space-y-6" style="display: none;">
+                        <!-- Dynamic content based on form type -->
+                    </div>
+
+                    <!-- Attachments -->
+                    <div>
+                            
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-semibold text-green-800 mb-2">ðŸ“‹ Auto-Assignment Information</h4>
+                                <p class="text-sm text-green-700" id="assignment-info">This request will be automatically routed to the appropriate department.</p>
+                            </div>
+                        \`;
+                    }
+                    
+                    function populateIOMFields(requestType) {
+                        console.log('Auto-populating fields for:', requestType);
+                        
+                        // Set title
+                        const titleField = document.getElementById('title');
+                        if (titleField) titleField.value = requestType;
+                        
+                        // Set purpose
+                        const purposeField = document.getElementById('purpose');
+                        if (purposeField && !purposeField.value) purposeField.value = requestType;
+                        
+                        // Set priority
+                        const priorityField = document.getElementById('priority');
+                        if (priorityField) {
+                            const priorityMapping = {
+                                'Vehicle Request': 'Routine',
+                                'Aircondition Repair': 'Urgent',
+                                'Electrical Repair': 'Urgent',
+                                'IT Support': 'Routine',
+                                'Plumbing Repair': 'Urgent',
+                                'Carpentry Work': 'Routine',
+                                'Cleaning Service': 'Routine',
+                                'Equipment Maintenance': 'Routine',
+                                'Purchase Request': 'Routine',
+                                'Other': 'Routine'
+                            };
+                            priorityField.value = priorityMapping[requestType] || 'Routine';
+                        }
+                        
+                        // Auto-assign department
+                        const targetDeptField = document.getElementById('to_department_id');
+                        if (targetDeptField && requestTypeRouting[requestType]) {
+                            const departmentInfo = requestTypeRouting[requestType];
+                            const departmentIdMapping = {
+                                'PFMO': '1',
+                                'IT Department': '15',
+                                'Administration': '14'
+                            };
+                            const deptId = departmentIdMapping[departmentInfo.department];
+                            if (deptId) {
+                                targetDeptField.value = deptId;
+                                targetDeptField.disabled = false;
+                            }
+                        }
+                        
+                        // Update assignment info
+                        const assignmentInfo = document.getElementById('assignment-info');
+                        if (assignmentInfo && requestTypeRouting[requestType]) {
+                            assignmentInfo.textContent = requestTypeRouting[requestType].description;
+                        }
+                    }
+                    </script>
+
+                    <!-- Target Department (Auto-assigned) -->
+                    <div>
+                        <label for="to_department_id" class="block text-sm font-medium text-gray-700 mb-2">Target Department <span class="text-red-500">*</span></label>
+                        <select id="to_department_id" name="to_department_id" required disabled
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-800 focus:outline-none">
+                            <option value="">Will be auto-assigned based on request type...</option>
+                            @foreach($departments as $department)
+                                <option value="{{ $department->department_id }}" {{ old('to_department_id') == $department->department_id ? 'selected' : '' }}>
+                                    {{ $department->dept_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <p class="text-xs text-gray-500 mt-1">âœ… Automatically assigned when you select a request type above.</p>
+                        @error('to_department_id')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Attachments -->
+                    <div>
+                        <label for="attachments" class="block text-sm font-medium text-gray-700 mb-2">Attachments (Optional)</label>
+                        <input type="file" id="attachments" name="attachments[]" multiple 
+                               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <p class="mt-1 text-xs text-gray-500">Supported formats: PDF, DOC, DOCX, JPG, PNG (Max 10MB each)</p>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div>
+                        <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="4" 
+                                  placeholder="Any additional information or special instructions..."
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">{{ old('notes') }}</textarea>
+                    </div>
+
+                    <!-- Proxy Submission Notice -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-blue-800">Proxy Submission Notice</h3>
+                                <div class="mt-2 text-sm text-blue-700">
+                                    <p>This request is being submitted on behalf of <strong>{{ $employee->full_name }}</strong>. The request will be routed through your department head for approval before being sent to the target department.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- File Attachments -->
+                    <div class="border-t border-gray-200 pt-6">
+                        <label for="attachments" class="block text-sm font-medium text-gray-700 mb-2">
+                            File Attachments 
+                            <span class="text-gray-500 text-xs">(Optional)</span>
+                        </label>
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                            <div class="space-y-1 text-center">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-gray-600">
+                                    <label for="attachments" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                        <span>Upload files</span>
+                                        <input id="attachments" name="attachments[]" type="file" multiple class="sr-only" 
+                                               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt"
+                                               onchange="displaySelectedFiles()">
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-xs text-gray-500">
+                                    PDF, DOC, DOCX, JPG, PNG, TXT up to 10MB each
+                                </p>
+                            </div>
+                        </div>
+                        <div id="selected-files" class="mt-3 space-y-2 hidden">
+                            <h4 class="text-sm font-medium text-gray-900">Selected Files:</h4>
+                            <div id="file-list" class="space-y-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
+                    <button type="button" onclick="history.back()" 
+                            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Cancel
+                    </button>
+                    <div class="flex space-x-3">
+                        <button type="button" id="preview-btn"
+                                class="inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Preview Request
+                        </button>
+                        <button type="submit" 
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                            </svg>
+                            Submit Proxy Request
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@endsection

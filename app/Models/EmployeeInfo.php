@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+class EmployeeInfo extends Model
+{
+    use HasFactory;
+
+    protected $table = 'tb_employeeinfo';
+    protected $primaryKey = 'Emp_No';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $fillable = [
+        'Emp_No',
+        'Titles',
+        'LastName',
+        'FirstName',
+        'MiddleName',
+        'Suffix',
+        'Email',
+    ];
+
+    /**
+     * Get the employee's full name.
+     */
+    public function getFullNameAttribute(): string
+    {
+        $parts = array_filter([
+            $this->Titles,
+            $this->FirstName,
+            $this->MiddleName,
+            $this->LastName,
+            $this->Suffix
+        ]);
+        return implode(' ', $parts);
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'Emp_No', 'Emp_No');
+    }
+}
