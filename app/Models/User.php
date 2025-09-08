@@ -137,6 +137,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if the user is a secretary.
+     */
+    public function isSecretary(): bool
+    {
+        return $this->position === 'Secretary' || $this->accessRole === 'Secretary';
+    }
+
+    /**
      * Check if the user can approve requests with a specific status.
      */
     public function canApproveStatus(string $status): bool
