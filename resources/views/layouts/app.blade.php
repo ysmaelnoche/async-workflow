@@ -32,6 +32,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
+    {{-- Page-specific styles pushed from views (e.g. legacy Bootstrap includes) --}}
+    @stack('styles')
+        
         <!-- Debug flag for JavaScript -->
         <script>
             window.debugMode = {{ config('app.debug') ? 'true' : 'false' }};
