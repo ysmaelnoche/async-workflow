@@ -1,4 +1,4 @@
-﻿<?php
+hp
 
 namespace App\Models;
 
