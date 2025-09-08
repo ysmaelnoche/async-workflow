@@ -1,4 +1,4 @@
-﻿    <!-- Custom CSS for Signature Block -->
+    <!-- Custom CSS for Signature Block -->
     <style>
         .signature-block {
             background: linear-gradient(145deg, #f8fafc, #f1f5f9);
@@ -316,19 +316,11 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
         } else if (val.length >= 10) {
             validationDisplay.innerHTML = ''; // Clear validation messages when valid
-            readyText.textContent = 'âœ“ Ready to submit';
+            readyText.textContent = '✓ Ready to submit';
             submitBtn.disabled = false;
         } else {
             validationDisplay.innerHTML = '';
             readyText.textContent = '';
-        confirmCharCount.textContent = val.length + ' characters';
-        if (val.length < 10) {
-            confirmCharCount.classList.add('text-red-500');
-            readyText.textContent = '';
-            submitBtn.disabled = false;
-        } else {
-            confirmCharCount.classList.remove('text-red-500');
-            readyText.textContent = 'âœ“ Ready to submit';
             submitBtn.disabled = false;
         }
     }
@@ -414,10 +406,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-            document.getElementById('feedbackFinalConfirmModal').classList.remove('hidden');
-        }
-    });
-
     window.closeFinalFeedbackConfirmModal = function() {
         document.getElementById('feedbackFinalConfirmModal').classList.add('hidden');
     };
@@ -461,11 +449,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Submit the form
         feedbackForm.submit();
-        // Submit feedback (simulate form submission)
-        // TODO: Replace with actual AJAX or form submit
-        alert('Feedback submitted: ' + val);
-        closeShortFeedbackWarning();
-        closeFeedbackConfirmModal();
     };
 });
 </script>
@@ -538,7 +521,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     @elseif($approval->action === 'Approved') bg-green-500
                                                     @elseif($approval->action === 'Evaluate') bg-blue-500
                                                     @elseif($approval->action === 'Send Feedback') bg-green-500
-                                                    @elseif($approval->action === 'Send Feedback') bg-yellow-500
                                                     @else bg-gray-500
                                                     @endif
                                                     rounded-full w-8 h-8 flex items-center justify-center ring-4 ring-white dark:ring-gray-800
@@ -616,17 +598,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                                 break;
                                                             default:
                                                                 $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Section';
-                                                            case 'electrical':
-                                                                $subDeptName = 'PFMO Electrical Department';
-                                                                break;
-                                                            case 'hvac':
-                                                                $subDeptName = 'PFMO HVAC Department';
-                                                                break;
-                                                            case 'general_services':
-                                                                $subDeptName = 'PFMO General Services';
-                                                                break;
-                                                            default:
-                                                                $subDeptName = 'PFMO ' . ucwords(str_replace('_', ' ', $formRequest->assigned_sub_department)) . ' Department';
                                                         }
                                                     }
                                                 @endphp
@@ -708,7 +679,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="border-b pb-4 mb-4">
                             <h3 class="text-lg font-semibold mb-4">Signatures</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 @foreach ($finalApprovals->sortBy('action_date') as $approval)
                                     @php
                                         $approverUser = $approval->approver;
@@ -792,34 +762,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         {{-- Date --}}
                                         <div class="absolute bottom-1 left-2 text-xs text-gray-500">
                                             {{ \Carbon\Carbon::parse($approval->action_date)->setTimezone(config('app.timezone_display', 'Asia/Manila'))->format('M j, Y') }}
-                                    @if (!empty($approval->signature_data) && ($isBase64 || $isUrl))
-                                        <div class="border rounded-lg p-4 flex flex-col items-center justify-between h-48">
-                                            <div class="flex-grow flex items-center justify-center w-full mb-2"> 
-                                                <img src="{{ $approval->signature_data }}" alt="Digital Signature" class="max-w-full max-h-24 object-contain">
-                                            </div>
-                                            <div class="text-center">
-                                                <p class="font-medium text-sm">{{ $displayName }}</p>
-                                                <p class="text-xs">
-                                                    <span class="px-2 py-0.5 rounded text-xs
-                                                        @if($approval->action === 'Rejected') bg-red-100 text-red-800
-                                                        @elseif($approval->action === 'Approved') bg-green-100 text-green-800
-                                                        @endif">
-                                                        {{ $approval->action }}
-                                                    </span>
-                                                    @if ($approverUser)
-                                                        <span class="text-gray-500">({{ $approverUser->position }})</span>
-                                                    @endif
-                                                </p>
-                                                <p class="text-xs text-gray-500 mt-0.5">{{ \Carbon\Carbon::parse($approval->action_date)->setTimezone(config('app.timezone_display', 'Asia/Manila'))->format('M j, Y, g:i A') }}</p>
-                                            </div>
-                                        </div>
-                                    @endif
-                                                </span>
-                                                @if ($approverUser)
-                                                    <span class="text-gray-500">({{ $approverUser->position }})</span>
-                                                @endif
-                                            </p>
-                                            <p class="text-xs text-gray-500 mt-0.5">{{ \Carbon\Carbon::parse($approval->action_date)->setTimezone(config('app.timezone_display', 'Asia/Manila'))->format('M j, Y, g:i A') }}</p>
                                         </div>
                                     </div>
                                 @endforeach
@@ -829,7 +771,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     {{-- DEBUG: Always show debugging information for troubleshooting --}}
                     <div class="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4">
-                        <strong>ðŸ” DEBUG INFO (Always Visible):</strong><br>
+                        <strong>🔍 DEBUG INFO (Always Visible):</strong><br>
                         <div class="grid grid-cols-2 gap-2 text-sm mt-2">
                             <div><strong>User ID:</strong> {{ Auth::user()->accnt_id }}</div>
                             <div><strong>Username:</strong> {{ Auth::user()->username }}</div>
@@ -869,7 +811,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 @elseif($canSendFeedback)
                                     {{-- PFMO Sub-department staff get Send Feedback option only (no reject) --}}
                                     <button onclick="openFeedbackConfirmModal()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-                                    <button onclick="openFeedbackConfirmModal()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
                                         Send Feedback
                                     </button>
                                 @elseif($canFinalDecision)
@@ -1143,37 +1084,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         Select a style and your name will be converted to a signature (scroll for more options)
                                                     </div>
                                                     <span id="signatureErrorShow" class="hidden text-xs text-red-500 block text-center mt-2">
-                                                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-2">
-                                                    <div id="signatureStyles" class="flex flex-row justify-center items-center gap-6">
-                                                        {{-- Signature styles will be loaded here --}}
-                                                    </div>
-                                                    <style>
-                                                        #signatureStyles .signature-preview {
-                                                            min-width: 120px;
-                                                            height: 32px;
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            font-size: 1.1rem;
-                                                            font-weight: 700;
-                                                            padding: 0.2rem 0.6rem;
-                                                            border-radius: 9999px;
-                                                            border: 2px solid #e5e7eb;
-                                                            background: #f3f4f6;
-                                                            color: #222;
-                                                            cursor: pointer;
-                                                            transition: box-shadow 0.2s, border-color 0.2s;
-                                                        }
-                                                        #signatureStyles .signature-preview.bg-blue-100 {
-                                                            box-shadow: 0 0 0 4px #3b82f6;
-                                                            border-color: #3b82f6;
-                                                            background: #e0f2fe;
-                                                        }
-                                                    </style>
-                                                    <div class="mt-1 text-xs text-gray-500 dark:text-gray-400 text-center">
-                                                        Select a style and your name will be converted to a signature
-                                                    </div>
-                                                    <span id="signatureErrorShow" class="hidden text-xs text-red-500 block text-center mt-1">
                                                         Please select a signature style
                                                     </span>
                                                 </div>
@@ -1504,11 +1414,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
     }));
     
-    const styles = [
-        { id: 1, name: 'Cursive', font: 'Pacifico' },
-        { id: 2, name: 'Bold', font: 'Arial Black' },
-        { id: 3, name: 'Classic', font: 'Times New Roman' }
-    ];
     const styleContainer = document.getElementById('signatureStyles');
     if (styleContainer) {
         styleContainer.innerHTML = '';
@@ -1565,16 +1470,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
-            div.style.fontFamily = style.font;
-            div.textContent = document.getElementById('name') ? document.getElementById('name').value : 'Signature';
-            div.onclick = function() {
-                document.getElementById('signatureStyle').value = style.id;
-                // Highlight selected
-                Array.from(styleContainer.children).forEach(child => child.classList.remove('bg-blue-100'));
-                div.classList.add('bg-blue-100');
-            };
-            styleContainer.appendChild(div);
-        });
     }
 
     // Before submit, save signature data
@@ -1705,20 +1600,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 showApprovalError(errorMessage);
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.reload();
-                } else {
-                    let msg = data.message || 'Approval failed.';
-                    if (data.errors && Array.isArray(data.errors)) {
-                        msg += '<ul class="mt-2 list-disc list-inside text-sm">' + data.errors.map(e => `<li>${e}</li>`).join('') + '</ul>';
-                    }
-                    showApprovalError(msg);
-                }
-            })
-            .catch(err => {
-                showApprovalError('An unexpected error occurred. Please try again.');
             });
         };
     }
