@@ -111,9 +111,12 @@
             }, true);
         </script>
         
-        <!-- Global Modal Alert Component -->
-        <x-modal-alert />
-        
-        @stack('scripts')
+    <!-- Global Modal Alert Component -->
+    <x-modal-alert />
+
+    <!-- Area for page-specific modal HTML (renders before scripts) -->
+    @stack('modals')
+
+    @stack('scripts')
     </body>
 </html>
